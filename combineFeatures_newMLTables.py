@@ -78,10 +78,7 @@ for snp in noExpressionDict:
 		noExpressionVector = noExpressionDict[snp]
 		onlyExpressionVector = onlyExpressionDict[snp]
 
-		# check to make sure snpType is the same --> snp type is in second column (snp group is in first column - index 0)
-		if noExpressionDict[snp][1] != onlyExpressionDict[snp][1]:
-			print "ERROR: snp types aren't the same!"
-
+		# snp type is the one specified in noExpressionDict
 		# combine these vectors 
 		combinedVector = noExpressionVector
 
