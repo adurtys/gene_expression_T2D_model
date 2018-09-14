@@ -82,6 +82,10 @@ outFilename = "centroidSnps_" + groupedSnpsFilename
 outFile = open(outFilename, 'w')
 
 for group in centroidSnps:
+	# obtain chromosome number
+	groupChromosome = group.split("_")[0]
+	chromosomeNumber = int(groupChromosome.strip("Chr"))
+
 	centroidSnp = "chr" + str(chromosomeNumber) + ":" + str(centroidSnps[group])
 
 	output += group + tab + centroidSnp + newline
