@@ -592,7 +592,7 @@ for line in snpFile:
 			geneVector = []
 
 			newIndex = 0
-			while (newIndex < len(distanceFromSnpDict)):
+			while (newIndex < len(distanceFromSnpDict)) and (len(genesToAnalyze) != expectedNumGenesToAnalyze):
 				if len(duplicates) == 0: # snp is not equidistant from genes
 					currentGeneId = genesToCheck[newIndex]
 					distanceToCheck = distanceFromSnpDict[currentGeneId]
