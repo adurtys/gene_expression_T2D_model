@@ -484,14 +484,15 @@ for line in snpFile:
 	print "There are", len(genesToAnalyze), "genes to analyze for tissue expression:", genesToAnalyze
 
 	if (processMissingSnps == "I") and (len(genesToAnalyze) != expectedNumGenesToAnalyze):
-		# couldn't find a gene in distanceFromSnpDict that was within the distance specified and also had tissue expression t-statistics
-		print "(expression_lookup3.py line 470): Couldn't find a gene in distanceFromSnpDict that was within the distance specified and also had tissue expression t-statistics. Including a larger distance and more genes in the search."
+		# couldn't find gene(s) in distanceFromSnpDict within the distance specified and also having tissue expression t-statistics
+		print "(expression_lookup3.py line 470): Couldn't find gene(s) in distanceFromSnpDict within the distance specified and also having tissue expression t-statistics."
 
 		numGenesLeftToFind = expectedNumGenesToAnalyze - len(genesToAnalyze) # only continue searching for num genes left
 		newNumGenes = numGenes
-		newDistancefromSnp = distanceFromSnp
-		newIndex = 0
-		while (newIndex < len(distanceFromSnpDict)) and (len(genesToAnalyze) != expectedNumGenesToAnalyze):
+		newDistanceFromSnp = distanceFromSnp
+		while numGenesLeftToFind > 0: # create new distanceFromSnpDict
+			print "Still have to find", numGenesLeftToFind, "genes. Including a larger distance and more genes in the search."
+
 			newDistanceFromSnp *= 2 # increase distance from the snp within which to search for genes
 			newNumGenes += numGenes # increase number of genes to find
 
@@ -502,8 +503,8 @@ for line in snpFile:
 
 			# don't research genes that have already been searched
 			for i in range(newNumGenes - numGenes):
-				rightStartLocations.pop(i)
-				leftStartLocations.pop(i)
+				rightStartLocations.pop(0)
+				leftStartLocations.pop(0)
 
 			# create list of nearby start locations on either side of the gene
 			nearbyStartLocations = leftStartLocations + rightStartLocations
@@ -529,8 +530,8 @@ for line in snpFile:
 			leftEndLocations = nearestNumbers(sortedEndLocations, snpLocation, newNumGenes, side="left")
 
 			for i in range(newNumGenes - numGenes):
-				rightEndLocations.pop(i)
-				leftEndLocations.pop(i)
+				rightEndLocations.pop(0)
+				leftEndLocations.pop(0)
 
 			# create list of nearby end locations on either side of the gene
 			nearbyEndLocations = leftEndLocations + rightEndLocations
@@ -590,8 +591,8 @@ for line in snpFile:
 			geneVectorDict = {}
 			geneVector = []
 
-			# NOTE: didn't modify expectedNumGenesToAnalyze because still only want however many genes was initially inputted by the user
-			while numGenesLeftToFind > 0:
+			newIndex = 0
+			while (newIndex < len(distanceFromSnpDict)):
 				if len(duplicates) == 0: # snp is not equidistant from genes
 					currentGeneId = genesToCheck[newIndex]
 					distanceToCheck = distanceFromSnpDict[currentGeneId]
@@ -641,7 +642,7 @@ for line in snpFile:
 					equidistantFromGenes[snpName] = duplicates
 
 					# assuming gene is only equidistant from two genes (and from one pair of genes) --> store one more gene than what was specified
-					expectedNumGenesToAnalyze = numGenes + 1
+					expectedNumGenesToAnalyze = newNumGenes + 1
 
 					currentGeneId = genesToCheck[newIndex]
 					distanceToCheck = distanceFromSnpDict[currentGeneId]
@@ -711,7 +712,8 @@ for line in snpFile:
 							print "Finding the next nearest gene containing tissue-expression t-statistics."
 							newIndex += 1
 
-				print "Upon recreating distanceFromSnpDict, there are", len(genesToAnalyze), "genes to analyze for tissue expression:", genesToAnalyze
+			print "Upon recreating distanceFromSnpDict, there are", len(genesToAnalyze), "genes to analyze for tissue expression:", genesToAnalyze
+			numGenesLeftToFind = expectedNumGenesToAnalyze - len(genesToAnalyze)
 
 	# proceed with analysis
 	if len(genesToAnalyze) == expectedNumGenesToAnalyze: 
