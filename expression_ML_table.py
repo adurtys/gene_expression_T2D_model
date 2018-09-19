@@ -125,6 +125,7 @@ for line in expressionVectorTableFile:
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
 
+	print "numParsedSnps --> snps placed into a category:", numParsedSnps
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
 allSnps = []
@@ -158,7 +159,7 @@ print "There were", len(snpsNotInSnpTypeDict), "snps that did not have a snp typ
 if numSnps != totalNumSnps:
 	print "ERROR: some snps are being lost." # deal with this!
 	snpsBeingLost = {}
-	for i in range(10):
+	for i in range(len(errorSnps)):
 		lostSnp = errorSnps.keys()[i]
 		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
 	print "Some snps include:", snpsBeingLost
