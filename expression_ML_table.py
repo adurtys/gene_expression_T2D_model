@@ -64,7 +64,6 @@ T2DLikeTestingSnps = {}
 T2DLikeTrainingSnps = {}
 
 snpsNotInSnpTypeDict = {}
-errorSnps = {}
 
 # populate expression vector dictionary
 for line in expressionVectorTableFile:
@@ -118,6 +117,22 @@ for line in expressionVectorTableFile:
 		snpsNotInSnpTypeDict[snp] = -1
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
+allSnps = []
+for snp in lipidTestingSnps:
+	allSnps.append(snp)
+for snp in lipidTrainingSnps:
+	allsnps.append(snp)
+for snp in T2DLikeTestingSnps:
+	allsnps.append(snp)
+for snp in T2DLikeTrainingSnps:
+	allsnps.append(snp)
+
+
+errorSnps = {}
+if (snp in snpTypeDict) and (snp not in allSnps):
+	errorSnps[snp] = -1
+
+
 # for snp in snpTypeDict:
 # 	if (snp not in lipidTestingSnps) and (snp not in lipidTrainingSnps) and (snp not in T2DLikeTrainingSnps) and (snp not in T2DLikeTestingSnps):
 # 		errorSnps[snp] = -1
@@ -130,13 +145,13 @@ print "There were", len(T2DLikeTrainingSnps), "T2D-like training snps."
 print "There were", len(snpsWithMultipleCategories), "snps in multiple categories."
 print "There were", len(snpsNotInSnpTypeDict), "snps that did not have a snp type specified in the input file. These snps were discarded."
 
-# if numSnps != totalNumSnps:
-# 	print "ERROR: some snps are being lost." # deal with this!
-# 	snpsBeingLost = {}
-# 	for i in range(10):
-# 		lostSnp = errorSnps.keys()[i]
-# 		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
-# 	print "Some snps include:", snpsBeingLost
+if numSnps != totalNumSnps:
+	print "ERROR: some snps are being lost." # deal with this!
+	snpsBeingLost = {}
+	for i in range(10):
+		lostSnp = errorSnps.keys()[i]
+		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
+	print "Some snps include:", snpsBeingLost
 
 print "Creating an output file for each of the four types of snp."
 # create output files
