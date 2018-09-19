@@ -64,12 +64,9 @@ T2DLikeTestingSnps = {}
 T2DLikeTrainingSnps = {}
 
 snpsNotInSnpTypeDict = {}
-
-# print len(snpTypeDict)
+parsedSnps = {}
 
 # populate expression vector dictionary
-parsedSnps = {}
-# print len(snpTypeDict)
 for line in expressionVectorTableFile:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
@@ -90,10 +87,6 @@ for line in expressionVectorTableFile:
 		vector.insert(1, snpType)
 
 		# snp category determines the dictionary in which the snp will be stored
-
-		# if (snp in lipidTestingSnps) or (snp in lipidTrainingSnps) or (snp in T2DLikeTestingSnps) or (snp in T2DLikeTrainingSnps):
-		# 	print "error (90) - overwriting"
-
 		if (snpCategory == "lipidTesting"):
 			lipidTestingSnps[snp] = vector
 		elif (snpCategory == "lipidTraining"):
@@ -103,7 +96,7 @@ for line in expressionVectorTableFile:
 		elif (snpCategory == "T2DLikeTraining"):
 			T2DLikeTrainingSnps[snp] = vector
 		else:
-			print "error (99)"
+			print "ERROR: invalid snp category!"
 
 		# add snps with multiple categories to both dictionaries
 		if snp in snpsWithMultipleCategories:
@@ -119,7 +112,7 @@ for line in expressionVectorTableFile:
 			elif (secondSnpCategory == "T2DLikeTraining"):
 				T2DLikeTrainingSnps[snp] = vector
 			else:
-				print "error (115)"
+				print "ERROR: invalid snp category!"
 
 		parsedSnps[snp] = 1
 
@@ -128,40 +121,13 @@ for line in expressionVectorTableFile:
 
 print "numParsedSnps --> snps placed into a category:", len(parsedSnps)
 
-errorSnps = {}
-for snp in parsedSnps:
-	if snp not in snpTypeDict:
-		errorSnps[snp] = 1
-
-print len(errorSnps)
-
 for snp in snpTypeDict:
 	if snp not in parsedSnps:
 		errorSnps[snp] = -1
 
-print len(errorSnps)
+print "number of error snps:", len(errorSnps)
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
-
-
-# allSnps = []
-# for snp in lipidTestingSnps:
-# 	allSnps.append(snp)
-# for snp in lipidTrainingSnps:
-# 	allSnps.append(snp)
-# for snp in T2DLikeTestingSnps:
-# 	allSnps.append(snp)
-# for snp in T2DLikeTrainingSnps:
-# 	allSnps.append(snp)
-
-
-# if (snp in snpTypeDict) and (snp not in allSnps):
-# 	errorSnps[snp] = -1
-
-
-# for snp in snpTypeDict:
-# 	if (snp not in lipidTestingSnps) and (snp not in lipidTrainingSnps) and (snp not in T2DLikeTrainingSnps) and (snp not in T2DLikeTestingSnps):
-# 		errorSnps[snp] = -1
 
 print "There were", totalNumSnps, "snps in total."
 print "There were", len(lipidTestingSnps), "lipid testing snps."
@@ -174,7 +140,7 @@ print "There were", len(snpsNotInSnpTypeDict), "snps that did not have a snp typ
 if numSnps != totalNumSnps:
 	print "ERROR: some snps are being lost." # deal with this!
 	snpsBeingLost = {}
-	for i in range(len(errorSnps)):
+	for i in range(10):
 		lostSnp = errorSnps.keys()[i]
 		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
 	print "Some snps include:", snpsBeingLost
