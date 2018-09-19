@@ -68,6 +68,8 @@ snpsNotInSnpTypeDict = {}
 # print len(snpTypeDict)
 
 # populate expression vector dictionary
+numParsedSnps = 0
+print len(snpTypeDict)
 for line in expressionVectorTableFile:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
@@ -75,7 +77,6 @@ for line in expressionVectorTableFile:
 	snp = columns[0]
 
 	# determine snp type from dictionary --> discard snps not in snpTypeDict
-	numParsedSnps = 0
 	if snp in snpTypeDict:
 		vector = []
 		for i in range(numTissues):
@@ -125,23 +126,29 @@ for line in expressionVectorTableFile:
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
 
-	print "numParsedSnps --> snps placed into a category:", numParsedSnps
+print "numParsedSnps --> snps placed into a category:", numParsedSnps
+
+for snp in snpsNotInSnpTypeDict:
+	if snp in snpTypeDict:
+		print "error ??? (133)"
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
-allSnps = []
-for snp in lipidTestingSnps:
-	allSnps.append(snp)
-for snp in lipidTrainingSnps:
-	allSnps.append(snp)
-for snp in T2DLikeTestingSnps:
-	allSnps.append(snp)
-for snp in T2DLikeTrainingSnps:
-	allSnps.append(snp)
 
 
-errorSnps = {}
-if (snp in snpTypeDict) and (snp not in allSnps):
-	errorSnps[snp] = -1
+# allSnps = []
+# for snp in lipidTestingSnps:
+# 	allSnps.append(snp)
+# for snp in lipidTrainingSnps:
+# 	allSnps.append(snp)
+# for snp in T2DLikeTestingSnps:
+# 	allSnps.append(snp)
+# for snp in T2DLikeTrainingSnps:
+# 	allSnps.append(snp)
+
+
+# errorSnps = {}
+# if (snp in snpTypeDict) and (snp not in allSnps):
+# 	errorSnps[snp] = -1
 
 
 # for snp in snpTypeDict:
