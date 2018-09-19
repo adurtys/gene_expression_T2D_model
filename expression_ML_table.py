@@ -123,6 +123,11 @@ print "There were", len(snpsNotInSnpTypeDict), "snps that did not have a snp typ
 
 if numSnps != totalNumSnps:
 	print "ERROR: some snps are being lost." # deal with this!
+	snpsBeingLost = {}
+	for i in range(10):
+		lostSnp = snpsNotInSnpTypeDict.keys(i)
+		snpsBeingLost[lostSnp] = snpsNotInSnpTypeDict[lostSnp]
+	print "Some snps include:", snpsBeingLost
 
 print "Creating an output file for each of the four types of snp."
 # create output files
