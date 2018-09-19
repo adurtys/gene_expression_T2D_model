@@ -68,7 +68,7 @@ snpsNotInSnpTypeDict = {}
 # print len(snpTypeDict)
 
 # populate expression vector dictionary
-numParsedSnps = 0
+parsedSnps = {}
 print len(snpTypeDict)
 for line in expressionVectorTableFile:
 	line = line.rstrip('\r\n')
@@ -121,16 +121,16 @@ for line in expressionVectorTableFile:
 			else:
 				print "error (115)"
 
-		numParsedSnps += 1
+		parsedSnps[snp] = 1
 
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
 
 print "numParsedSnps --> snps placed into a category:", numParsedSnps
 
-for snp in snpsNotInSnpTypeDict:
-	if snp in snpTypeDict:
-		print "error ??? (133)"
+errorSnps = {}
+if (snp in snpTypeDict) and (snp not in parsedSnps):
+	errorSnps[snp] = -1
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
 
@@ -146,7 +146,6 @@ totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTesti
 # 	allSnps.append(snp)
 
 
-# errorSnps = {}
 # if (snp in snpTypeDict) and (snp not in allSnps):
 # 	errorSnps[snp] = -1
 
