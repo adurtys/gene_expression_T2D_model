@@ -121,10 +121,7 @@ for line in expressionVectorTableFile:
 			else:
 				print "error (115)"
 
-		if snp in parsedSnps:
-			parsedSnps[snp] = 2
-		else:
-			parsedSnps[snp] = 1
+		parsedSnps[snp] = 1
 
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
@@ -132,8 +129,17 @@ for line in expressionVectorTableFile:
 print "numParsedSnps --> snps placed into a category:", len(parsedSnps)
 
 errorSnps = {}
-if (snp in snpTypeDict) and (snp not in parsedSnps):
-	errorSnps[snp] = -1
+for snp in parsedSnps:
+	if snp not in snpTypeDict:
+		errorSnps[snp] = 1
+
+print len(errorSnps)
+
+for snp in snpTypeDict:
+	if snp not in parsedSnps:
+		errorSnps[snp] = -1
+
+print len(errorSnps)
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
 
@@ -173,97 +179,97 @@ if numSnps != totalNumSnps:
 		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
 	print "Some snps include:", snpsBeingLost
 
-print "Creating an output file for each of the four types of snp."
-# create output files
-lipidTestingOutFilename = "lipid_testing_expression_ML_table.txt"
-lipidTrainingOutFilename = "lipid_training_expression_ML_table.txt"
-T2DLikeTestingOutFilename = "T2D_like_testing_expression_ML_table.txt"
-T2DLikeTrainingOutFilename = "T2D_like_training_expression_ML_table.txt"
+# print "Creating an output file for each of the four types of snp."
+# # create output files
+# lipidTestingOutFilename = "lipid_testing_expression_ML_table.txt"
+# lipidTrainingOutFilename = "lipid_training_expression_ML_table.txt"
+# T2DLikeTestingOutFilename = "T2D_like_testing_expression_ML_table.txt"
+# T2DLikeTrainingOutFilename = "T2D_like_training_expression_ML_table.txt"
 
-# open the four output files
-lipidTestingOutFile = open(lipidTestingOutFilename, 'w')
-lipidTrainingOutFile = open(lipidTrainingOutFilename, 'w')
-T2DLikeTestingOutFile = open(T2DLikeTestingOutFilename, 'w')
-T2DLikeTrainingOutFile = open(T2DLikeTrainingOutFilename, 'w')
+# # open the four output files
+# lipidTestingOutFile = open(lipidTestingOutFilename, 'w')
+# lipidTrainingOutFile = open(lipidTrainingOutFilename, 'w')
+# T2DLikeTestingOutFile = open(T2DLikeTestingOutFilename, 'w')
+# T2DLikeTrainingOutFile = open(T2DLikeTrainingOutFilename, 'w')
 
-tab = "\t"
-newline = "\n"
+# tab = "\t"
+# newline = "\n"
 
-# create new header line
-newHeaderLine = "snp" + tab + "type" + tab
-for i in range(numTissues):
-	if i < (numTissues - 1):
-		newHeaderLine += headers[i + 1] + tab
-	else: # create new line at end
-		newHeaderLine += headers[i + 1] + newline
+# # create new header line
+# newHeaderLine = "snp" + tab + "type" + tab
+# for i in range(numTissues):
+# 	if i < (numTissues - 1):
+# 		newHeaderLine += headers[i + 1] + tab
+# 	else: # create new line at end
+# 		newHeaderLine += headers[i + 1] + newline
 
-# create lipid testing output file
-lipidTestingOutput = newHeaderLine
-for snp in lipidTestingSnps:
-	snp = lipidTestingSnps[snp][0]
-	snpType = lipidTestingSnps[snp][1]
+# # create lipid testing output file
+# lipidTestingOutput = newHeaderLine
+# for snp in lipidTestingSnps:
+# 	snp = lipidTestingSnps[snp][0]
+# 	snpType = lipidTestingSnps[snp][1]
 
-	lipidTestingOutput += snp + tab + snpType + tab
+# 	lipidTestingOutput += snp + tab + snpType + tab
 
-	for i in range(numTissues):
-		if i < (numTissues - 1):
-			lipidTestingOutput += lipidTestingSnps[snp][i + 2] + tab
-		else: # create new line at the end of each vector
-			lipidTestingOutput += lipidTestingSnps[snp][i + 2] + newline
+# 	for i in range(numTissues):
+# 		if i < (numTissues - 1):
+# 			lipidTestingOutput += lipidTestingSnps[snp][i + 2] + tab
+# 		else: # create new line at the end of each vector
+# 			lipidTestingOutput += lipidTestingSnps[snp][i + 2] + newline
 
-lipidTestingOutFile.write(lipidTestingOutput)
-lipidTestingOutFile.close()
+# lipidTestingOutFile.write(lipidTestingOutput)
+# lipidTestingOutFile.close()
 
-# create lipid training output file
-lipidTrainingOutput = newHeaderLine
-for snp in lipidTrainingSnps:
-	snp = lipidTrainingSnps[snp][0]
-	snpType = lipidTrainingSnps[snp][1]
+# # create lipid training output file
+# lipidTrainingOutput = newHeaderLine
+# for snp in lipidTrainingSnps:
+# 	snp = lipidTrainingSnps[snp][0]
+# 	snpType = lipidTrainingSnps[snp][1]
 
-	lipidTrainingOutput += snp + tab + snpType + tab
+# 	lipidTrainingOutput += snp + tab + snpType + tab
 
-	for i in range(numTissues):
-		if i < (numTissues - 1):
-			lipidTrainingOutput += lipidTrainingSnps[snp][i + 2] + tab
-		else: # create new line at the end of each vector
-			lipidTrainingOutput += lipidTrainingSnps[snp][i + 2] + newline
+# 	for i in range(numTissues):
+# 		if i < (numTissues - 1):
+# 			lipidTrainingOutput += lipidTrainingSnps[snp][i + 2] + tab
+# 		else: # create new line at the end of each vector
+# 			lipidTrainingOutput += lipidTrainingSnps[snp][i + 2] + newline
 
-lipidTrainingOutFile.write(lipidTrainingOutput)
-lipidTrainingOutFile.close()
+# lipidTrainingOutFile.write(lipidTrainingOutput)
+# lipidTrainingOutFile.close()
 
-# create T2D-like testing output file
-T2DLikeTestingOutput = newHeaderLine
-for snp in T2DLikeTestingSnps:
-	snp = T2DLikeTestingSnps[snp][0]
-	snpType = T2DLikeTestingSnps[snp][1]
+# # create T2D-like testing output file
+# T2DLikeTestingOutput = newHeaderLine
+# for snp in T2DLikeTestingSnps:
+# 	snp = T2DLikeTestingSnps[snp][0]
+# 	snpType = T2DLikeTestingSnps[snp][1]
 
-	T2DLikeTestingOutput += snp + tab + snpType + tab
+# 	T2DLikeTestingOutput += snp + tab + snpType + tab
 
-	for i in range(numTissues):
-		if i < (numTissues - 1):
-			T2DLikeTestingOutput += T2DLikeTestingSnps[snp][i + 2] + tab
-		else: # create new line at the end of each vector
-			T2DLikeTestingOutput += T2DLikeTestingSnps[snp][i + 2] + newline
+# 	for i in range(numTissues):
+# 		if i < (numTissues - 1):
+# 			T2DLikeTestingOutput += T2DLikeTestingSnps[snp][i + 2] + tab
+# 		else: # create new line at the end of each vector
+# 			T2DLikeTestingOutput += T2DLikeTestingSnps[snp][i + 2] + newline
 
-T2DLikeTestingOutFile.write(T2DLikeTestingOutput)
-T2DLikeTestingOutFile.close()
+# T2DLikeTestingOutFile.write(T2DLikeTestingOutput)
+# T2DLikeTestingOutFile.close()
 
-# create T2D-like training output file
-T2DLikeTrainingOutput = newHeaderLine
-for snp in T2DLikeTrainingSnps:
-	snp = T2DLikeTrainingSnps[snp][0]
-	snpType = T2DLikeTrainingSnps[snp][1]
+# # create T2D-like training output file
+# T2DLikeTrainingOutput = newHeaderLine
+# for snp in T2DLikeTrainingSnps:
+# 	snp = T2DLikeTrainingSnps[snp][0]
+# 	snpType = T2DLikeTrainingSnps[snp][1]
 
-	T2DLikeTrainingOutput += snp + tab + snpType + tab
+# 	T2DLikeTrainingOutput += snp + tab + snpType + tab
 
-	for i in range(numTissues):
-		if i < (numTissues - 1):
-			T2DLikeTrainingOutput += T2DLikeTrainingSnps[snp][i + 2] + tab
-		else: # create new line at the end of each vector
-			T2DLikeTrainingOutput += T2DLikeTrainingSnps[snp][i + 2] + newline
+# 	for i in range(numTissues):
+# 		if i < (numTissues - 1):
+# 			T2DLikeTrainingOutput += T2DLikeTrainingSnps[snp][i + 2] + tab
+# 		else: # create new line at the end of each vector
+# 			T2DLikeTrainingOutput += T2DLikeTrainingSnps[snp][i + 2] + newline
 
-T2DLikeTrainingOutFile.write(T2DLikeTrainingOutput)
-T2DLikeTrainingOutFile.close()
+# T2DLikeTrainingOutFile.write(T2DLikeTrainingOutput)
+# T2DLikeTrainingOutFile.close()
 
-expressionVectorTableFile.close()
-print "Finished creating output files."
+# expressionVectorTableFile.close()
+# print "Finished creating output files."
