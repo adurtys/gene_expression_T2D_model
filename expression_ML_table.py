@@ -121,6 +121,10 @@ for line in expressionVectorTableFile:
 		snpsNotInSnpTypeDict[snp] = -1
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
+for snp in snpTypeDict:
+	if (snp not in lipidTestingSnps) and (snp not in lipidTrainingSnps) and (snp not in T2DLikeTrainingSnps) and (snp not in T2DLikeTestingSnps):
+		errorSnps[snp] = -1
+
 print "There were", totalNumSnps, "snps in total."
 print "There were", len(lipidTestingSnps), "lipid testing snps."
 print "There were", len(lipidTrainingSnps), "lipid training snps."
