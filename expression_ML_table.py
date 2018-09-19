@@ -96,7 +96,7 @@ for line in expressionVectorTableFile:
 		elif (snpCategory == "T2DLikeTraining"):
 			T2DLikeTrainingSnps[snp] = vector
 		else:
-			errorSnps[snp] = vector
+			print "error (99)"
 
 		# add snps with multiple categories to both dictionaries
 		if snp in snpsWithMultipleCategories:
@@ -112,18 +112,15 @@ for line in expressionVectorTableFile:
 			elif (secondSnpCategory == "T2DLikeTraining"):
 				T2DLikeTrainingSnps[snp] = vector
 			else:
-				if snp in errorSnps:
-					print "error snp again"
-				else:
-					errorSnps[snp] = vector
+				print "error (115)"
 
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
 
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
-for snp in snpTypeDict:
-	if (snp not in lipidTestingSnps) and (snp not in lipidTrainingSnps) and (snp not in T2DLikeTrainingSnps) and (snp not in T2DLikeTestingSnps):
-		errorSnps[snp] = -1
+# for snp in snpTypeDict:
+# 	if (snp not in lipidTestingSnps) and (snp not in lipidTrainingSnps) and (snp not in T2DLikeTrainingSnps) and (snp not in T2DLikeTestingSnps):
+# 		errorSnps[snp] = -1
 
 print "There were", totalNumSnps, "snps in total."
 print "There were", len(lipidTestingSnps), "lipid testing snps."
@@ -133,13 +130,13 @@ print "There were", len(T2DLikeTrainingSnps), "T2D-like training snps."
 print "There were", len(snpsWithMultipleCategories), "snps in multiple categories."
 print "There were", len(snpsNotInSnpTypeDict), "snps that did not have a snp type specified in the input file. These snps were discarded."
 
-if numSnps != totalNumSnps:
-	print "ERROR: some snps are being lost." # deal with this!
-	snpsBeingLost = {}
-	for i in range(10):
-		lostSnp = errorSnps.keys()[i]
-		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
-	print "Some snps include:", snpsBeingLost
+# if numSnps != totalNumSnps:
+# 	print "ERROR: some snps are being lost." # deal with this!
+# 	snpsBeingLost = {}
+# 	for i in range(10):
+# 		lostSnp = errorSnps.keys()[i]
+# 		snpsBeingLost[lostSnp] = errorSnps[lostSnp]
+# 	print "Some snps include:", snpsBeingLost
 
 print "Creating an output file for each of the four types of snp."
 # create output files
