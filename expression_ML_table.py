@@ -69,7 +69,7 @@ snpsNotInSnpTypeDict = {}
 
 # populate expression vector dictionary
 parsedSnps = {}
-print len(snpTypeDict)
+# print len(snpTypeDict)
 for line in expressionVectorTableFile:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
@@ -121,12 +121,15 @@ for line in expressionVectorTableFile:
 			else:
 				print "error (115)"
 
-		parsedSnps[snp] = 1
+		if snp in parsedSnps:
+			parsedSnps[snp] = 2
+		else:
+			parsedSnps[snp] = 1
 
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
 
-print "numParsedSnps --> snps placed into a category:", numParsedSnps
+print "numParsedSnps --> snps placed into a category:", len(parsedSnps)
 
 errorSnps = {}
 if (snp in snpTypeDict) and (snp not in parsedSnps):
