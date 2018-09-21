@@ -114,7 +114,7 @@ for line in expressionVectorTableFile:
 			else:
 				print "ERROR: invalid snp category!"
 
-		# parsedSnps[snp] = 1
+		parsedSnps[snp] = 1
 
 	else: # snp not in snpTypeDict
 		snpsNotInSnpTypeDict[snp] = -1
