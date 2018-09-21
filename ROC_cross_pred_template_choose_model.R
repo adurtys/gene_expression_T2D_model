@@ -12,11 +12,11 @@ trait2 <- args[2]
 directory <- args[4]
 
 #import data
-trait1_train <-read.delim(file=paste(directory,"/",trait1,"_training_"+model+"_ML_table.txt",sep=""))
-trait1_test  <-read.delim(file=paste(directory,"/",trait1,"_testing_"+model+"ML_table.txt",sep=""))
+trait1_train <-read.delim(file=paste(directory,"/",trait1,"_training_",model,"_ML_table.txt",sep=""))
+trait1_test  <-read.delim(file=paste(directory,"/",trait1,"_testing_",model,"ML_table.txt",sep=""))
 
-trait2_train <-read.delim(file=paste(directory,"/",trait2,"_training_"+model+"ML_table.txt",sep=""))
-trait2_test  <-read.delim(file=paste(directory,"/",trait2,"_testing_"+model+"ML_table.txt",sep=""))
+trait2_train <-read.delim(file=paste(directory,"/",trait2,"_training_",model,"ML_table.txt",sep=""))
+trait2_test  <-read.delim(file=paste(directory,"/",trait2,"_testing_",model,"ML_table.txt",sep=""))
 
 #trait1_train <-read.delim(file="C:\\Users\\Kim\\Documents\\ML\\V2\\NHGRI\\models\\T2D_like_lipid_alzheimer2\\T2D_like_training_ML_table.txt")
 #trait1_test  <-read.delim(file="C:\\Users\\Kim\\Documents\\ML\\V2\\NHGRI\\models\\T2D_like_lipid_alzheimer2\\T2D_like_testing_ML_table.txt")
