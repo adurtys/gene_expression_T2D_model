@@ -71,8 +71,8 @@ for i in namelist:
 	###################################################
 	##run coef parse script & consolidate coef information
 	###################################################
-	Infile = Out+"/"+modeltype+"_"+i+"_coefficients.txt"
-	parsed_coef = Out+"/"+modeltype+"_"+i+"_coefficients_parsed.txt"
+	Infile = Out+"/"+i+"_"+modeltype+"_coefficients.txt"
+	parsed_coef = Out+"/"+i+"_"+modeltype+"_coefficients_parsed.txt"
 	runstuff("perl /project/voight_ML/lorenzk/V2/scripts/Parse_coef_output.pl "+Infile+" "+parsed_coef)
 	
 	#read back in parsed coef table
@@ -114,7 +114,7 @@ for i in namelist:
 	#add chosen model to list
 	modellist.append(model)
 	
-	model_coef_filepath = Out+"/"+modeltype+"_"+i+"_"+model+".txt"
+	model_coef_filepath = Out+"/"+i+"_"+modeltype+"_"+model+".txt"
 	
 	#removing coef with 0 value
 	select = coef_table[coef_table[model] != 0]
