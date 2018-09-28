@@ -168,12 +168,12 @@ for group in nearestGeneDict:
 			else:
 				vector_mergedNG.append(0)
 
-	# concatenate the four vectors (vector_firstNG, vector_second_NG, vector_thirdNG, vector_mergedNG) into one long vector
-	vector = vector_firstNG + vector_secondNG + vector_thirdNG + vector_mergedNG
-	vector.insert(0, group)
-	vector.insert(0, snpType)
+		# concatenate the four vectors (vector_firstNG, vector_second_NG, vector_thirdNG, vector_mergedNG) into one long vector
+		vector = vector_firstNG + vector_secondNG + vector_thirdNG + vector_mergedNG
+		vector.insert(0, group)
+		vector.insert(0, snpType)
 
-	snpVectorDict[group] = [snpCategory, vector]
+		snpVectorDict[group] = [snpCategory, vector]
 
 ##### create the expression ML table ####
 
@@ -198,6 +198,8 @@ for group in snpVectorDict:
 		T2DLikeTrainingSnps[group] = snpVector
 	else:
 		print "ERROR: invalid snpCategory!"
+
+totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
 
 print "There were", totalNumSnps, "snps in total."
 print "There were", len(lipidTestingSnps), "lipid testing snps."
@@ -236,21 +238,21 @@ origLabels = []
 
 for i in range(numNewLabels):
 	if i in range(numTissues):
-		origLabel.append(headers[i + 1])
+		origLabels.append(headers[i + 1])
 	else:
 		j = i % numTissues
 		if i in range(numTissues, firstNG_indexes):
-			newLabel = origLabel[j] + "_firstNG"
+			newLabel = origLabels[j] + "_firstNG"
 			newHeaderLine += newLabel + tab
 		elif i in range(firstNG_indexes, secondNG_indexes):
-			newLabel = origLabel[j] + "_secondNG"
+			newLabel = origLabels[j] + "_secondNG"
 			newHeaderLine += newLabel + tab
 		elif i in range(secondNG_indexes, numNewLabels):
-			newLabel = origLabel[j] + "_thirdNG"
+			newLabel = origLabels[j] + "_thirdNG"
 			newHeaderLine += newLabel + tab
 
 for i in range(numTissues):
-	newLabel = origLabel[i] + "_mergedNG"
+	newLabel = origLabels[i] + "_mergedNG"
 	if i < (numTissues - 1):
 		newHeaderLine += newLabel + tab
 	else: # create new line at end
