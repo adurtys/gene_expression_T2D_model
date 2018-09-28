@@ -171,7 +171,7 @@ for group in nearestGeneDict:
 		# concatenate the four vectors (vector_firstNG, vector_second_NG, vector_thirdNG, vector_mergedNG) into one long vector
 		vector = vector_firstNG + vector_secondNG + vector_thirdNG + vector_mergedNG
 		vector.insert(0, group)
-		vector.insert(0, snpType)
+		vector.insert(1, snpType)
 
 		snpVectorDict[group] = [snpCategory, vector]
 
@@ -199,13 +199,29 @@ for group in snpVectorDict:
 	else:
 		print "ERROR: invalid snpCategory!"
 
+	# add snps with multiple categories to both dictionaries
+	if group in snpsWithMultipleCategories:
+		secondSnpCategory = snpsWithMultipleCategories[snp][2]
+
+		# snp category determines the dictionary in which the snp will be stored
+		if (secondSnpCategory == "lipidTesting"):
+			lipidTestingSnps[snp] = snpVector
+		elif (secondSnpCategory == "lipidTraining"):
+			lipidTrainingSnps[snp] = snpVector
+		elif (secondSnpCategory == "T2DLikeTesting"):
+			T2DLikeTestingSnps[snp] = snpVector
+		elif (secondSnpCategory == "T2DLikeTraining"):
+			T2DLikeTrainingSnps[snp] = snpVector
+		else:
+			print "ERROR: invalid snp category!"
+
 totalNumSnps = len(lipidTestingSnps) + len(lipidTrainingSnps) + len(T2DLikeTestingSnps) + len(T2DLikeTrainingSnps)
 
 print "There were", totalNumSnps, "snps in total."
 print "There were", len(lipidTestingSnps), "lipid testing snps."
 print "There were", len(lipidTrainingSnps), "lipid training snps."
-print "There were", len(T2DLikeTestingSnps), "T2D-like testing snps."
-print "There were", len(T2DLikeTrainingSnps), "T2D-like training snps."
+print "There were", len(T2DLikeTestingSnps), "T2D testing snps."
+print "There were", len(T2DLikeTrainingSnps), "T2D training snps."
 print "There were", len(snpsWithMultipleCategories), "snps in multiple categories."
 
 if numSnps != totalNumSnps:
@@ -268,9 +284,9 @@ for group in lipidTestingSnps:
 
 	for i in range(numNewLabels):
 		if i < (numNewLabels - 1):
-			lipidTestingOutput += lipidTestingSnps[group][i + 2] + tab
+			lipidTestingOutput += str(lipidTestingSnps[group][i + 2]) + tab
 		else: # create new line at the end of each vector
-			lipidTestingOutput += lipidTestingSnps[group][i + 2] + newline
+			lipidTestingOutput += str(lipidTestingSnps[group][i + 2]) + newline
 
 lipidTestingOutFile.write(lipidTestingOutput)
 lipidTestingOutFile.close()
@@ -285,9 +301,9 @@ for group in lipidTrainingSnps:
 
 	for i in range(numNewLabels):
 		if i < (numNewLabels - 1):
-			lipidTrainingOutput += lipidTrainingSnps[group][i + 2] + tab
+			lipidTrainingOutput += str(lipidTrainingSnps[group][i + 2]) + tab
 		else: # create new line at the end of each vector
-			lipidTrainingOutput += lipidTrainingSnps[group][i + 2] + newline
+			lipidTrainingOutput += str(lipidTrainingSnps[group][i + 2]) + newline
 
 lipidTrainingOutFile.write(lipidTrainingOutput)
 lipidTrainingOutFile.close()
@@ -302,9 +318,9 @@ for group in T2DLikeTestingSnps:
 
 	for i in range(numNewLabels):
 		if i < (numNewLabels - 1):
-			T2DLikeTestingOutput += T2DLikeTestingSnps[group][i + 2] + tab
+			T2DLikeTestingOutput += str(T2DLikeTestingSnps[group][i + 2]) + tab
 		else: # create new line at the end of each vector
-			T2DLikeTestingOutput += T2DLikeTestingSnps[group][i + 2] + newline
+			T2DLikeTestingOutput += str(T2DLikeTestingSnps[group][i + 2]) + newline
 
 T2DLikeTestingOutFile.write(T2DLikeTestingOutput)
 T2DLikeTestingOutFile.close()
@@ -319,9 +335,9 @@ for group in T2DLikeTrainingSnps:
 
 	for i in range(numNewLabels):
 		if i < (numNewLabels - 1):
-			T2DLikeTrainingOutput += T2DLikeTrainingSnps[group][i + 2] + tab
+			T2DLikeTrainingOutput += str(T2DLikeTrainingSnps[group][i + 2]) + tab
 		else: # create new line at the end of each vector
-			T2DLikeTrainingOutput += T2DLikeTrainingSnps[group][i + 2] + newline
+			T2DLikeTrainingOutput += str(T2DLikeTrainingSnps[group][i + 2]) + newline
 
 T2DLikeTrainingOutFile.write(T2DLikeTrainingOutput)
 T2DLikeTrainingOutFile.close()
