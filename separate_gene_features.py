@@ -2,8 +2,8 @@
 # Date Last Modified: 28 September 2018
 # argv[1] = nearestGenes_filename
 # argv[2] = normalizedTstat_filename
-# argv[3] = threshold #
-# argv[4] = groupedSnpTypes_filename
+# argv[3] = groupedSnpTypes_filename
+# argv[4] = threshold #
 
 #!/usr/bin/env python
 import sys
@@ -97,7 +97,7 @@ for line in nearestGeneMatrixFile:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
 
-	columns[0] = groupName
+	groupName = columns[0]
 	# columns[1] = snp
 	# columns[2] = first_nearestGene
 	# columns[3] = second_nearestGene
@@ -117,55 +117,56 @@ nearestGeneMatrixFile.close()
 snpVectorDict = {}
 
 for group in nearestGeneDict:
-	# store relevant info for each grouped snp
-	# centroidSnp = nearestGeneDict[group][1]
-	snpType = snpTypeDict[group][1]
-	snpCategory = snpTypeDict[group][2]
-	first_ng = nearestGeneDict[group][2]
-	second_ng = nearestGeneDict[group][3]
-	third_ng = nearestGeneDict[group][4]
-
+	# store relevant info for each grouped snp that is in snpTypeDict
 	vector_firstNG = []
 	vector_secondNG = []
 	vector_thirdNG = []
 	vector_mergedNG = []
+	
+	if group in snpTypeDict:
+		# centroidSnp = nearestGeneDict[group][1]
+		snpType = snpTypeDict[group][1]
+		snpCategory = snpTypeDict[group][2]
+		first_ng = nearestGeneDict[group][2]
+		second_ng = nearestGeneDict[group][3]
+		third_ng = nearestGeneDict[group][4]
 
-	# determine output vector for first_nearestGene
-	if first_ng not in expressionRanks:
-		print "ERROR (separate_gene_features.py line 135): first nearest gene doesn't have t-statistics."
-	else:
-		for i in range(numTissues):
-			if expressionRanks[first_ng][i] >= critRank:
-				vector_firstNG.append(1)
-			else:
-				vector_firstNG.append(0)
-
-	# determine output vector for second_nearestGene
-	if second_ng not in expressionRanks:
-		print "ERROR (separate_gene_features.py line 145): second nearest gene doesn't have t-statistics."
-	else:
-		for i in range(numTissues):
-			if expressionRanks[second_ng][i] >= critRank:
-				vector_secondNG.append(1)
-			else:
-				vector_secondNG.append(0)
-
-	# determine output vector for third_nearestGene
-	if third_ng not in expressionRanks:
-		print "ERROR (separate_gene_features.py line 155): third nearest gene doesn't have t-statistics."
-	else:
-		for i in range(numTissues):
-			if expressionRanks[third_ng][i] >= critRank:
-				vector_thirdNG.append(1)
-			else:
-				vector_thirdNG.append(0)
-
-	# determine output vector when merging info for nearest genes
-	for i in range(numTissues):
-		if (vector_firstNG[i] == 1) or (vector_secondNG[i] == 1) or (vector_thirdNG[i] == 1):
-			vector_mergedNG.append(1)
+		# determine output vector for first_nearestGene
+		if first_ng not in expressionRanks:
+			print "ERROR (separate_gene_features.py line 136): first nearest gene doesn't have t-statistics."
 		else:
-			vector_mergedNG.append(0)
+			for i in range(numTissues):
+				if expressionRanks[first_ng][i] >= critRank:
+					vector_firstNG.append(1)
+				else:
+					vector_firstNG.append(0)
+
+		# determine output vector for second_nearestGene
+		if second_ng not in expressionRanks:
+			print "ERROR (separate_gene_features.py line 146): second nearest gene doesn't have t-statistics."
+		else:
+			for i in range(numTissues):
+				if expressionRanks[second_ng][i] >= critRank:
+					vector_secondNG.append(1)
+				else:
+					vector_secondNG.append(0)
+
+		# determine output vector for third_nearestGene
+		if third_ng not in expressionRanks:
+			print "ERROR (separate_gene_features.py line 156): third nearest gene doesn't have t-statistics."
+		else:
+			for i in range(numTissues):
+				if expressionRanks[third_ng][i] >= critRank:
+					vector_thirdNG.append(1)
+				else:
+					vector_thirdNG.append(0)
+
+		# determine output vector when merging info for nearest genes
+		for i in range(numTissues):
+			if (vector_firstNG[i] == 1) or (vector_secondNG[i] == 1) or (vector_thirdNG[i] == 1):
+				vector_mergedNG.append(1)
+			else:
+				vector_mergedNG.append(0)
 
 	# concatenate the four vectors (vector_firstNG, vector_second_NG, vector_thirdNG, vector_mergedNG) into one long vector
 	vector = vector_firstNG + vector_secondNG + vector_thirdNG + vector_mergedNG
