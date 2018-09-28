@@ -149,10 +149,10 @@ if numSnps != totalNumSnps:
 
 print "Creating an output file for each of the four types of snp."
 # create output files
-lipidTestingOutFilename = "lipid_testing_expression_ML_table.txt"
-lipidTrainingOutFilename = "lipid_training_expression_ML_table.txt"
-T2DLikeTestingOutFilename = "T2D_like_testing_expression_ML_table.txt"
-T2DLikeTrainingOutFilename = "T2D_like_training_expression_ML_table.txt"
+lipidTestingOutFilename = "lipid_testing_onlyExpression_ML_table.txt"
+lipidTrainingOutFilename = "lipid_training_onlyExpression_ML_table.txt"
+T2DLikeTestingOutFilename = "T2D_testing_onlyExpression_ML_table.txt"
+T2DLikeTrainingOutFilename = "T2D_training_onlyExpression_ML_table.txt"
 
 # open the four output files
 lipidTestingOutFile = open(lipidTestingOutFilename, 'w')
