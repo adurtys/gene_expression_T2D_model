@@ -201,17 +201,17 @@ for group in snpVectorDict:
 
 	# add snps with multiple categories to both dictionaries
 	if group in snpsWithMultipleCategories:
-		secondSnpCategory = snpsWithMultipleCategories[snp][2]
+		secondSnpCategory = snpsWithMultipleCategories[group][2]
 
-		# snp category determines the dictionary in which the snp will be stored
+		# snpGroup category determines the dictionary in which the snp will be stored
 		if (secondSnpCategory == "lipidTesting"):
-			lipidTestingSnps[snp] = snpVector
+			lipidTestingSnps[group] = snpVector
 		elif (secondSnpCategory == "lipidTraining"):
-			lipidTrainingSnps[snp] = snpVector
+			lipidTrainingSnps[group] = snpVector
 		elif (secondSnpCategory == "T2DLikeTesting"):
-			T2DLikeTestingSnps[snp] = snpVector
+			T2DLikeTestingSnps[group] = snpVector
 		elif (secondSnpCategory == "T2DLikeTraining"):
-			T2DLikeTrainingSnps[snp] = snpVector
+			T2DLikeTrainingSnps[group] = snpVector
 		else:
 			print "ERROR: invalid snp category!"
 
