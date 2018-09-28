@@ -342,5 +342,4 @@ for group in T2DLikeTrainingSnps:
 T2DLikeTrainingOutFile.write(T2DLikeTrainingOutput)
 T2DLikeTrainingOutFile.close()
 
-expressionVectorTableFile.close()
 print "Finished creating output files."
