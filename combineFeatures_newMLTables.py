@@ -23,6 +23,7 @@ expressionHeaders = expressionHeaderLine.split('\t')
 
 numExpressionHeaders = len(expressionHeaders) # for checking
 numTissues = len(expressionHeaders) - 2 # doesn't count first two columns, which are snpGroup and snpType
+print "numExpressionHeaders:", numExpressionHeaders
 
 # store each vector in dictionary (key = snp group, value = vector)
 onlyExpressionDict = {}
@@ -89,7 +90,7 @@ for snp in noExpressionDict:
 		combinedFeaturesDict[snp] = combinedVector
 
 # create output file
-outFilename = noExpressionMLTableFilename.rstrip("noExpression_ML_table.txt") + "_combined_ML_table.txt"
+outFilename = noExpressionMLTableFilename.rstrip("_noExpression_ML_table.txt") + "_combined_ML_table.txt"
 outFile = open(outFilename, 'w')
 
 tab = "\t"

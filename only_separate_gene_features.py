@@ -257,9 +257,9 @@ for i in range(numNewLabels):
 	elif i in range(numTissues, secondNG_indexes):
 		newLabel = headers[j + 1] + "_secondNG"
 		newHeaderLine += newLabel + tab
-	elif i in range(secondNG_indexes, numNewLabels)
+	elif i in range(secondNG_indexes, numNewLabels):
 		newLabel = headers[j + 1] + "_thirdNG"
-		newHeaderLine += newLabel + tab
+		newHeaderLine += newLabel + newline
 
 # create lipid testing output file
 lipidTestingOutput = newHeaderLine
