@@ -1,5 +1,5 @@
 # Date Created: 24 September 2018
-# Date Last Modified: 28 September 2018
+# Date Last Modified: 12 October 2018
 # argv[1] = nearestGenes_filename
 # argv[2] = normalizedTstat_filename
 # argv[3] = groupedSnpTypes_filename
@@ -246,34 +246,20 @@ newline = "\n"
 # create new header line
 newHeaderLine = "snp" + tab + "type" + tab
 
-# numNewLabels = numTissues * 4
-numNewLabels = numTissues * 3 # version that doesn't include mergedNG features
-firstNG_indexes = numTissues * 2
-secondNG_indexes = numTissues * 3
-
-origLabels = []
+numNewLabels = numTissues * 3
+secondNG_indexes = numTissues * 2
 
 for i in range(numNewLabels):
-	if i in range(numTissues):
-		origLabels.append(headers[i + 1])
-	else:
-		j = i % numTissues
-		if i in range(numTissues, firstNG_indexes):
-			newLabel = origLabels[j] + "_firstNG"
-			newHeaderLine += newLabel + tab
-		elif i in range(firstNG_indexes, secondNG_indexes):
-			newLabel = origLabels[j] + "_secondNG"
-			newHeaderLine += newLabel + tab
-		elif i in range(secondNG_indexes, numNewLabels):
-			newLabel = origLabels[j] + "_thirdNG"
-			newHeaderLine += newLabel + tab
-
-# for i in range(numTissues):
-# 	newLabel = origLabels[i] + "_mergedNG"
-# 	if i < (numTissues - 1):
-# 		newHeaderLine += newLabel + tab
-# 	else: # create new line at end
-# 		newHeaderLine += newLabel + newline
+	j = i % numTissues
+	if i in range(numTissues): # index of first_NG
+		newLabel = headers[i + 1] + "_firstNG"
+		newHeaderLine += newLabel + tab
+	elif i in range(numTissues, secondNG_indexes):
+		newLabel = headers[j + 1] + "_secondNG"
+		newHeaderLine += newLabel + tab
+	elif i in range(secondNG_indexes, numNewLabels)
+		newLabel = headers[j + 1] + "_thirdNG"
+		newHeaderLine += newLabel + tab
 
 # create lipid testing output file
 lipidTestingOutput = newHeaderLine
