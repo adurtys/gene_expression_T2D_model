@@ -99,7 +99,7 @@ geneAnnotationsFilename = sys.argv[2]
 tstatFilename = sys.argv[3]
 numGenes = int(sys.argv[4])
 distanceFromSnp = float(sys.argv[5]) * 1000 # multiply by 1000 to convert kilobp to bp
-threshold = float(sys.argv[6])
+# threshold = float(sys.argv[6])
 outFilename = sys.argv[7]
 nearestGenesFilename = sys.argv[8]
 processMissingSnps = sys.argv[9]
@@ -157,8 +157,8 @@ genesWithTstats = len(expressionRanks)
 print "Finished reading in normalized t-statistics file, which contained tissue expression t-statistics for", genesWithTstats, "genes."
 
 # determine whether expression rank meets threshold for high expression
-numTopRankingGenes = threshold * genesWithTstats
-critRank = genesWithTstats - numTopRankingGenes
+# numTopRankingGenes = threshold * genesWithTstats
+# critRank = genesWithTstats - numTopRankingGenes
 
 # create dictionary containing relevant information pertaining to each gene in the gene annotations file (key = geneId; value = list of info [geneChrom, geneName, geneStart, geneEnd])
 geneAnnotations = {}
@@ -733,10 +733,11 @@ for line in snpFile:
 			else:
 				# determine whether expression vector meets threshold and add 1's and 0's accordingly
 				for i in range(numTissues):
-					if expressionRanks[gene][i] >= critRank:
-						geneVector.append(1)
-					else:
-						geneVector.append(0)
+					geneVector.append(expressionRanks[gene][i])
+					# if expressionRanks[gene][i] >= critRank:
+					# 	geneVector.append(1)
+					# else:
+					# 	geneVector.append(0)
 
 				geneVectorDict[gene] = geneVector
 	else: # len(genesToAnalyze) != expectedNumGenesToAnalyze (this should only be the case for processMissingSnps = H)
@@ -747,10 +748,11 @@ for line in snpFile:
 			for gene in genesToAnalyze:
 				# determine whether expression vector meets threshold and add 1's and 0's accordingly
 				for i in range(numTissues):
-					if expressionRanks[gene][i] >= critRank:
-						geneVector.append(1)
-					else:
-						geneVector.append(0)
+					geneVector.append(expressionRanks[gene][i])
+					# if expressionRanks[gene][i] >= critRank:
+					# 	geneVector.append(1)
+					# else:
+					# 	geneVector.append(0)
 
 				geneVectorDict[gene] = geneVector
 
@@ -770,9 +772,10 @@ for line in snpFile:
 		# combine all the geneVectorDict values for each snp	
 		for gene in geneVectorDict:
 			for i in range(numTissues):
-				if geneVectorDict[gene][i] == 1:
-					# modify the snp output vector if the tissue expression for any gene in the geneVector dictionary has 
-					snpOutputVector[i] = 1
+				snpOutputDict[i] = geneVectorDict[gene][i]
+				# if geneVectorDict[gene][i] == 1:
+				# 	# modify the snp output vector if the tissue expression for any gene in the geneVector dictionary has 
+				# 	snpOutputVector[i] = 1
 
 		# use snpOutputVector as the key in the output dictionary
 		snpOutputDict[snpName] = snpOutputVector
