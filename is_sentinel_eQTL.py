@@ -35,6 +35,7 @@ for line in tissue_eqtl_file:
 	var_tss_dist = columns[11]
 	var_chr = columns[12]
 	var_snp = columns[13]
+	rsID = columns[16]
 	pval = columns[22]
 	qval = columns[27]
 
@@ -48,6 +49,7 @@ for line in tissue_eqtl_file:
 		eqtlInfo.append(var_tss_dist)
 		eqtlInfo.append(int(var_chr))
 		eqtlInfo.append(var_snp)
+		eqtlInfo.append(rsID)
 		eqtlInfo.append(float(pval))
 		eqtlInfo.append(float(qval))
 
@@ -66,7 +68,7 @@ for i in range(5):
 # determine the genes attached to the smallest q-values
 qval_qtl_output_dict = {}
 for gene in eqtlDict:
-	if eqtlDict[gene][6] in smallest_qval:
+	if eqtlDict[gene][7] in smallest_qval:
 		qval_qtl_output_dict[gene] = eqtlDict[gene]
 
 print qval_qtl_output_dict
@@ -75,10 +77,10 @@ print qval_qtl_output_dict
 tab = "\t"
 newline = "\n"
 
-qval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
+qval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[16] + tab + headers[22] + tab + headers[27] + newline
 for gene in qval_qtl_output_dict:
-	for i in range(7):
-		if i < 6:
+	for i in range(8):
+		if i < 7:
 			qval_output += str(qval_qtl_output_dict[gene][i]) + tab
 		else:
 			qval_output += str(qval_qtl_output_dict[gene][i]) + newline
@@ -99,15 +101,15 @@ for i in range(5):
 # determine the genes attached to the smallest q-values
 pval_qtl_output_dict = {}
 for gene in eqtlDict:
-	if eqtlDict[gene][5] in smallest_pval:
+	if eqtlDict[gene][6] in smallest_pval:
 		pval_qtl_output_dict[gene] = eqtlDict[gene]
 
 print pval_qtl_output_dict
 
 pval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
 for gene in pval_qtl_output_dict:
-	for i in range(7):
-		if i < 6:
+	for i in range(8):
+		if i < 7:
 			pval_output += str(pval_qtl_output_dict[gene][i]) + tab
 		else:
 			pval_output += str(pval_qtl_output_dict[gene][i]) + newline
