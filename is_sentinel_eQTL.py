@@ -18,6 +18,11 @@ tissue_eqtl_file = open(tissue_eqtl_filename, 'r')
 eqtlDict = {}
 qvalList = []
 
+# store headers
+headerLine = tissue_eqtl_file.readline()
+headerLine = headerLine.rstrip('\r\n')
+headers = headerLine.split('\t')
+
 for line in tissue_eqtl_file:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
@@ -25,7 +30,7 @@ for line in tissue_eqtl_file:
 	eqtlInfo = []
 
 	gene_id = columns[0]
-	gene_chr = int(columns[1])
+	gene_chr = int(columns[2])
 	var_tss_dist = columns[11]
 	var_chr = int(columns[12])
 	qval = columns[27]
@@ -61,7 +66,7 @@ for gene in eqtlDict:
 tab = "\t"
 newline = "\t"
 
-output = ""
+output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[27] + newline
 for gene in qtl_output_dict:
 	for i in range(5):
 		if i < 4:
