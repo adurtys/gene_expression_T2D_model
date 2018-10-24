@@ -18,6 +18,7 @@ tissue_eqtl_file = open(tissue_eqtl_filename, 'r')
 eqtlDict = {}
 qvalList = []
 pvalList = []
+
 # store headers
 headerLine = tissue_eqtl_file.readline()
 headerLine = headerLine.rstrip('\r\n')
@@ -75,7 +76,7 @@ tab = "\t"
 newline = "\n"
 
 qval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
-for gene in qtl_output_dict:
+for gene in qval_qtl_output_dict:
 	for i in range(7):
 		if i < 6:
 			qval_output += str(qval_qtl_output_dict[gene][i]) + tab
@@ -86,7 +87,7 @@ for gene in qtl_output_dict:
 qval_outFilename = "sentinelQTL_qval_test.txt"
 qval_outFile = open(qval_outFilename, 'w')
 
-qval_outFile.write(output)
+qval_outFile.write(qval_output)
 
 qval_outFile.close()
 
@@ -107,14 +108,14 @@ pval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[
 for gene in pval_qtl_output_dict:
 	for i in range(7):
 		if i < 6:
-			output += str(pval_qtl_output_dict[gene][i]) + tab
+			pval_output += str(pval_qtl_output_dict[gene][i]) + tab
 		else:
-			output += str(pval_qtl_output_dict[gene][i]) + newline
+			pval_output += str(pval_qtl_output_dict[gene][i]) + newline
 
 # create output file
 pval_outFilename = "sentinelQTL_pval_test.txt"
 pval_outFile = open(pval_outFilename, 'w')
 
-pval_outFile.write(output)
+pval_outFile.write(pval_output)
 
 pval_outFile.close()
