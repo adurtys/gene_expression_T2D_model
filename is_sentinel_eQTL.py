@@ -2,7 +2,7 @@
 # Date Last Modified: 24 October 2018
 # Execution: python is_sentinel_eQTL.py 
 # argv1: tissue_eqtl.txt
-# Description: for the given tissue file, outputs the 5 qtls with the smallest false discovery rate (q-val) and the snps attached to them
+# Description: for the given tissue file, outputs the 5 qtls with the smallest p-val and the snps attached to them
 # Run time: 
 
 #!/usr/bin/env python
@@ -17,7 +17,7 @@ tissue_eqtl_file = open(tissue_eqtl_filename, 'r')
 # create data structures to store info from the file
 eqtlDict = {}
 qvalList = []
-
+pvalList = []
 # store headers
 headerLine = tissue_eqtl_file.readline()
 headerLine = headerLine.rstrip('\r\n')
@@ -34,17 +34,20 @@ for line in tissue_eqtl_file:
 	var_tss_dist = columns[11]
 	var_chr = columns[12]
 	var_snp = columns[13]
+	pval = columns[22]
 	qval = columns[27]
 
 	# only include if cis-eqtl and not on x-chromosome
 	if (gene_chr != "X") and (int(gene_chr) == int(var_chr)):
 		qvalList.append(float(qval))
+		pvalList.append(float(pval))
 
 		eqtlInfo.append(gene_id)
 		eqtlInfo.append(int(gene_chr))
 		eqtlInfo.append(var_tss_dist)
 		eqtlInfo.append(int(var_chr))
 		eqtlInfo.append(var_snp)
+		eqtlInfo.append(float(pval))
 		eqtlInfo.append(float(qval))
 
 		eqtlDict[gene_id] = eqtlInfo
@@ -52,6 +55,7 @@ for line in tissue_eqtl_file:
 tissue_eqtl_file.close()
 
 qvalList.sort()
+pvalList.sort()
 
 # determine five smallest q-values
 smallest_qval = []
@@ -59,29 +63,58 @@ for i in range(5):
 	smallest_qval.append(qvalList[i])
 
 # determine the genes attached to the smallest q-values
-qtl_output_dict = {}
+qval_qtl_output_dict = {}
 for gene in eqtlDict:
-	if eqtlDict[gene][4] in smallest_qval:
-		qtl_output_dict[gene] = eqtlDict[gene]
+	if eqtlDict[gene][6] in smallest_qval:
+		qval_qtl_output_dict[gene] = eqtlDict[gene]
 
-print qtl_output_dict
+print qval_qtl_output_dict
 
 # create output for output file
 tab = "\t"
 newline = "\n"
 
-output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[27] + newline
+qval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
 for gene in qtl_output_dict:
-	for i in range(6):
-		if i < 5:
-			output += str(qtl_output_dict[gene][i]) + tab
+	for i in range(7):
+		if i < 6:
+			qval_output += str(qval_qtl_output_dict[gene][i]) + tab
 		else:
-			output += str(qtl_output_dict[gene][i]) + newline
+			qval_output += str(qval_qtl_output_dict[gene][i]) + newline
 
 # create output file
-outFilename = "sentinelQTL_test.txt"
-outFile = open(outFilename, 'w')
+qval_outFilename = "sentinelQTL_qval_test.txt"
+qval_outFile = open(qval_outFilename, 'w')
 
-outFile.write(output)
+qval_outFile.write(output)
 
-outFile.close()
+qval_outFile.close()
+
+# determine five smallest p-values
+smallest_pval = []
+for i in range(5):
+	smallest_pval.append(pvalList[i])
+
+# determine the genes attached to the smallest q-values
+pval_qtl_output_dict = {}
+for gene in eqtlDict:
+	if eqtlDict[gene][5] in smallest_pval:
+		pval_qtl_output_dict[gene] = eqtlDict[gene]
+
+print pval_qtl_output_dict
+
+pval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
+for gene in pval_qtl_output_dict:
+	for i in range(7):
+		if i < 6:
+			output += str(pval_qtl_output_dict[gene][i]) + tab
+		else:
+			output += str(pval_qtl_output_dict[gene][i]) + newline
+
+# create output file
+pval_outFilename = "sentinelQTL_pval_test.txt"
+pval_outFile = open(pval_outFilename, 'w')
+
+pval_outFile.write(output)
+
+pval_outFile.close()
