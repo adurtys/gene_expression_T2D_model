@@ -33,6 +33,7 @@ for line in tissue_eqtl_file:
 	gene_chr = columns[2]
 	var_tss_dist = columns[11]
 	var_chr = columns[12]
+	var_snp = columns[13]
 	qval = columns[27]
 
 	# only include if cis-eqtl and not on x-chromosome
@@ -43,6 +44,7 @@ for line in tissue_eqtl_file:
 		eqtlInfo.append(int(gene_chr))
 		eqtlInfo.append(var_tss_dist)
 		eqtlInfo.append(int(var_chr))
+		eqtlInfo.append(var_snp)
 		eqtlInfo.append(float(qval))
 
 		eqtlDict[gene_id] = eqtlInfo
@@ -70,8 +72,8 @@ newline = "\n"
 
 output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[27] + newline
 for gene in qtl_output_dict:
-	for i in range(5):
-		if i < 4:
+	for i in range(6):
+		if i < 5:
 			output += str(qtl_output_dict[gene][i]) + tab
 		else:
 			output += str(qtl_output_dict[gene][i]) + newline
