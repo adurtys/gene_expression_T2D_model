@@ -1,5 +1,5 @@
 # Date Created: 25 July 2018
-# Date Last Modified: 20 August 2018
+# Date Last Modified: 19 October 2018
 # Execution: python expression_lookup.py snpFilename geneAnnotationsFilename tstatFilename numGenes distanceFromSnp
 #	threshold outFilename nearestGenesFilename processMissingSnps
 # argv1: filename for file containing centroid snps to search (there are two columns in this file - the first is the group number
@@ -99,7 +99,7 @@ geneAnnotationsFilename = sys.argv[2]
 tstatFilename = sys.argv[3]
 numGenes = int(sys.argv[4])
 distanceFromSnp = float(sys.argv[5]) * 1000 # multiply by 1000 to convert kilobp to bp
-# threshold = float(sys.argv[6])
+threshold = float(sys.argv[6])
 outFilename = sys.argv[7]
 nearestGenesFilename = sys.argv[8]
 processMissingSnps = sys.argv[9]
@@ -772,7 +772,7 @@ for line in snpFile:
 		# combine all the geneVectorDict values for each snp	
 		for gene in geneVectorDict:
 			for i in range(numTissues):
-				snpOutputDict[i] = geneVectorDict[gene][i]
+				snpOutputVector[i] = geneVectorDict[gene][i]
 				# if geneVectorDict[gene][i] == 1:
 				# 	# modify the snp output vector if the tissue expression for any gene in the geneVector dictionary has 
 				# 	snpOutputVector[i] = 1
