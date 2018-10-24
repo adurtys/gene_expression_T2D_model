@@ -30,19 +30,19 @@ for line in tissue_eqtl_file:
 	eqtlInfo = []
 
 	gene_id = columns[0]
-	gene_chr = int(columns[2])
+	gene_chr = columns[2]
 	var_tss_dist = columns[11]
-	var_chr = int(columns[12])
+	var_chr = columns[12]
 	qval = columns[27]
 
-	# only include if cis-eqtl
-	if (gene_chr == var_chr):
+	# only include if cis-eqtl and not on x-chromosome
+	if (gene_chr != "X") and (int(gene_chr) == int(var_chr)):
 		qvalList.append(float(qval))
 
 	eqtlInfo.append(gene_id)
-	eqtlInfo.append(gene_chr)
+	eqtlInfo.append(int(gene_chr))
 	eqtlInfo.append(var_tss_dist)
-	eqtlInfo.append(var_chr)
+	eqtlInfo.append(int(var_chr))
 	eqtlInfo.append(qval)
 
 	eqtlDict[gene_id] = eqtlInfo
