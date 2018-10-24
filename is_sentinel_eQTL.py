@@ -39,13 +39,13 @@ for line in tissue_eqtl_file:
 	if (gene_chr != "X") and (int(gene_chr) == int(var_chr)):
 		qvalList.append(float(qval))
 
-	eqtlInfo.append(gene_id)
-	eqtlInfo.append(int(gene_chr))
-	eqtlInfo.append(var_tss_dist)
-	eqtlInfo.append(int(var_chr))
-	eqtlInfo.append(qval)
+		eqtlInfo.append(gene_id)
+		eqtlInfo.append(int(gene_chr))
+		eqtlInfo.append(var_tss_dist)
+		eqtlInfo.append(int(var_chr))
+		eqtlInfo.append(qval)
 
-	eqtlDict[gene_id] = eqtlInfo
+		eqtlDict[gene_id] = eqtlInfo
 
 tissue_eqtl_file.close()
 
