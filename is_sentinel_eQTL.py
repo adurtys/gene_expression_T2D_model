@@ -43,7 +43,7 @@ for line in tissue_eqtl_file:
 		eqtlInfo.append(int(gene_chr))
 		eqtlInfo.append(var_tss_dist)
 		eqtlInfo.append(int(var_chr))
-		eqtlInfo.append(qval)
+		eqtlInfo.append(float(qval))
 
 		eqtlDict[gene_id] = eqtlInfo
 
@@ -62,17 +62,19 @@ for gene in eqtlDict:
 	if eqtlDict[gene][4] in smallest_qval:
 		qtl_output_dict[gene] = eqtlDict[gene]
 
+print qtl_output_dict
+
 # create output for output file
 tab = "\t"
-newline = "\t"
+newline = "\n"
 
 output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[27] + newline
 for gene in qtl_output_dict:
 	for i in range(5):
 		if i < 4:
-			output += qtl_output_dict[gene][i] + tab
+			output += str(qtl_output_dict[gene][i]) + tab
 		else:
-			output += qtl_output_dict[gene][i] + newline
+			output += str(qtl_output_dict[gene][i]) + newline
 
 # create output file
 outFilename = "sentinelQTL_test.txt"
