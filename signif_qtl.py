@@ -17,7 +17,7 @@ tissueQTL_filenames = os.listdir(tissueQTL_Directory)
 # key = tissue type, value = dictionary of info QTLs in LD with a GWAS snp on the same chromosome and within a certain SPECIFIED distance (TODO)
 tissue_signifQTL_Dict = {} 
 
-for filename in tissueQTL_files:
+for filename in tissueQTL_filenames:
 	# store tissue name
 	tissue = filename.rstrip("Analysis.v6p.egenes.txt").rstrip('_')
 	
