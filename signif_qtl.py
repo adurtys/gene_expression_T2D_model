@@ -24,7 +24,7 @@ for filename in tissueQTL_files:
 	file = open(filename, 'r')
 
 	# store the header line once (for first file in the directory)
-	if (filename = tissueQTL_files[0]):
+	if (filename = tissueQTL_filenames[0]):
 		headerLine = file.readline()
 	else:
 		file.readline()
