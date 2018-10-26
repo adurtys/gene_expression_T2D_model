@@ -1,9 +1,9 @@
 # Date Created: 24 October 2018
 # Date Last Modified: 24 October 2018
-# Execution: python is_sentinel_eQTL.py 
+# Execution: python is_sentinel_eQTL.py [1]
 # argv1: tissue_eqtl.txt
 # Description: for the given tissue file, outputs the 5 qtls with the smallest p-val and the snps attached to them
-# Run time: 
+# Run time: ~3 sec
 
 #!/usr/bin/env python
 import sys
@@ -106,7 +106,7 @@ for gene in eqtlDict:
 
 print pval_qtl_output_dict
 
-pval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[22] + tab + headers[27] + newline
+pval_output = headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[16] + tab + headers[22] + tab + headers[27] + newline
 for gene in pval_qtl_output_dict:
 	for i in range(8):
 		if i < 7:
