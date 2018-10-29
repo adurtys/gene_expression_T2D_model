@@ -64,7 +64,9 @@ tab = "\t"
 newline = "\n"
 
 # create new header line
-newHeaderLine = "Tissue" + tab + headerLine[0] + tab + headerLine[2] + tab + headerLine[11] + tab + headerLine[12] + tab + headerLine[13] + tab + headerLine[16] + tab + headerLine[27] + newline
+headers = headerLine.split('\t')
+
+newHeaderLine = "Tissue" + tab + headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[16] + tab + headers[27] + newline
 
 output = newHeaderLine
 for tissue in tissue_signifQTL_Dict:
