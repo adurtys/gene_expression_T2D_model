@@ -74,7 +74,7 @@ for tissue in tissue_signifQTL_Dict:
 			if (i < len(tissue_signifQTL_Dict[tissue][gene_id]) - 1):
 				output += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + tab
 			else: # add newline at end of each gene
-				output += str(tissue_signifQTL_Dict[tissue][i]) + newline
+				output += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + newline
 
 outputFile.write(output)
 outputFile.close()
