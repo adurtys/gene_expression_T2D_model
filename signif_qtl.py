@@ -35,8 +35,6 @@ for filename in tissueQTL_filenames:
 		line = line.rstrip('\r\n')
 		columns = line.split('\t')
 
-		print len(columns)
-
 		eqtlInfo = []
 
 		gene_id = columns[0]
