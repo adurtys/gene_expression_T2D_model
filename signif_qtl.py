@@ -48,7 +48,7 @@ for filename in tissueQTL_filenames:
 		# only include if cis-eqtl and not on x-chromosome
 		if (gene_chr != "X") and (int(gene_chr) == int(var_chr)):
 			if (qval < threshold):
-				eqtlInfo.extend([gene_id, int(gene_chr), int(var_tss_dist), int(var_chr), var_snp, rsID, qval])
+				eqtlInfo.extend([tissue, gene_id, int(gene_chr), int(var_tss_dist), int(var_chr), var_snp, rsID, qval])
 
 		eqtlDict[gene_id] = eqtlInfo
 
@@ -64,12 +64,11 @@ tab = "\t"
 newline = "\n"
 
 # create new header line
-newHeaderLine = "Tissue" + tab + headerLine
+newHeaderLine = "Tissue" + tab + headerLine[0] + tab + headerLine[2] + tab + headerLine[11] + tab + headerLine[12] + tab + headerLine[13] + tab + headerLine[16] + tab + headerLine[27] + newline
 
 output = newHeaderLine
 for tissue in tissue_signifQTL_Dict:
 	for gene_id in tissue_signifQTL_Dict[tissue]:
-		output += tissue + tab
 		for i in range(len(tissue_signifQTL_Dict[tissue][gene_id])):
 			if (i < len(tissue_signifQTL_Dict[tissue][gene_id]) - 1):
 				output += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + tab
