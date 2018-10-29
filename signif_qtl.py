@@ -13,6 +13,7 @@ tissueQTL_Directory = sys.argv[1]
 threshold = float(sys.argv[2])
 
 tissueQTL_filenames = os.listdir(tissueQTL_Directory)
+tissueQTL_filenames.sort()
 
 # key = tissue type, value = dictionary of info QTLs in LD with a GWAS snp on the same chromosome and within a certain SPECIFIED distance (TODO)
 tissue_signifQTL_Dict = {} 
@@ -20,8 +21,9 @@ tissue_signifQTL_Dict = {}
 for filename in tissueQTL_filenames:
 	# store tissue name
 	tissue = filename.rstrip("Analysis.v6p.egenes.txt").rstrip('_')
+	filepath = tissueQTL_Directory + "/" + filename
 	
-	file = open(filename, 'r')
+	file = open(filepath, 'r')
 
 	# store the header line once (for first file in the directory)
 	if (filename == tissueQTL_filenames[0]):
