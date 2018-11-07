@@ -113,9 +113,9 @@ for header in newHighExpressionHeaders:
 
 for i in range(2, numExpressionHeaders):
 	if i < (numExpressionHeaders - 1):
-		newHeaderLine += expressionHeaders[i] + tab
+		newHeaderLine += newLowExpressionHeaders[i] + tab
 	else: # add new line at end
-		newHeaderLine += expressionHeaders[i] + newline
+		newHeaderLine += newLowExpressionHeaders[i] + newline
 
 output = newHeaderLine
 
