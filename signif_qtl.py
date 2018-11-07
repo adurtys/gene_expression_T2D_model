@@ -1,11 +1,12 @@
 # Date Created: 26 October 2018
-# Date Last Modified: 26 October 2018
+# Date Last Modified: 29 October 2018
 # Execution: python signif_qtl.py [1] [2]
 # argv[1] = path to directory containing GTEx tissue eQTL files (/project/voight_datasets/GTEx_V6p/egenes)
 # argv[2] = threshold for q-value significance for variant-gene pair (0.05)
-# Description: creates a matrix of qtls that are significant (q-value less than threshold) for all tissues and a "collapsed tissue"
-# Run time: 
+# Description: creates a matrix of qtls that are significant (q-value less than threshold) for all tissues
+# Run time: ~20 sec
 
+#!/usr/bin/env python
 import sys, os
 
 # read in command-line arguments
@@ -13,7 +14,6 @@ tissueQTL_Directory = sys.argv[1]
 threshold = float(sys.argv[2])
 
 tissueQTL_filenames = os.listdir(tissueQTL_Directory)
-tissueQTL_filenames.sort()
 
 # key = tissue type, value = dictionary of info QTLs in LD with a GWAS snp on the same chromosome and within a certain SPECIFIED distance (TODO)
 tissue_signifQTL_Dict = {} 
