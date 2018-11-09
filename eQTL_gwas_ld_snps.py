@@ -1,7 +1,7 @@
 # Date Created: 2 November 2018
 # Date Last Modified: 9 November 2018
 # Execution: python eQTL_gwas_ld_snps.py [1] [2]
-# argv[1] = path to directory containing LD files for all chromosomes (/project/voight_ML/adurtys/eqtl_feature/plink_output/ld_files)
+# argv[1] = path to directory containing LD files for all chromosomes (/project/voight_ML/adurtys/eqtl_feature/isLD)
 # argv[2] = list of eQTL snps
 # Description: determines which eQTL snps are in LD with GWAS snps of interest
 # Run Time: 
@@ -29,18 +29,14 @@ for filename in ld_filenames:
 
 	for line in file:
 		line = line.rstrip('\r\n')
-		columns = line.split('\t')
+		columns = line.split()
 
 		snpA = columns[2]
 		snpB = columns[5]
 		r2 = float(columns[6])
 
-		if (r2 == 1) and (snpA != snpB):
-			print "ERROR: r2 = 1, but snps A and B are not the same! snpA:", snpA, "snpB:", snpB
-			# if snpA == snpB, then not in LD because same snp
-		
-		if (r2 != 1):
-			if snpA not in ld_snps_pairs.keys():
+		if (snpA != snpB):
+			if snpA not in ld_snp_pairs.keys():
 				# check if it is the values (stored as snpB)
 				if snpA in ld_snp_pairs.values():
 					# snpA is stored as snpB in the pairs dictionary --> get snpA
@@ -73,7 +69,7 @@ for snp in eQTL_snpList:
 	for chromosome in all_ld_snps_dict:
 		if (snp in all_ld_snps_dict[chromosome]):
 			for i in range(len(all_ld_snps_dict[chromosome][snp])):
-				if i < len(all_ld_snps_dict[chromosome][snp] - 1):
+				if i < (len(all_ld_snps_dict[chromosome][snp]) - 1):
 					output += all_ld_snps_dict[chromosome][snp][i] + tab
 				else:
 					output += all_ld_snps_dict[chromosome][snp][i] + newline
