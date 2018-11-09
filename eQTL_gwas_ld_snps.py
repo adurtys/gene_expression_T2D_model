@@ -4,7 +4,7 @@
 # argv[1] = path to directory containing LD files for all chromosomes (/project/voight_ML/adurtys/eqtl_feature/isLD)
 # argv[2] = list of eQTL snps
 # Description: determines which eQTL snps are in LD with GWAS snps of interest
-# Run Time: 
+# Run Time: 4 sec
 
 #!/usr/bin/env python
 import sys, os
@@ -70,6 +70,11 @@ for snp in eQTL_snpList:
 		if (snp in all_ld_snps_dict[chromosome]):
 			for i in range(len(all_ld_snps_dict[chromosome][snp])):
 				if i < (len(all_ld_snps_dict[chromosome][snp]) - 1):
-					output += all_ld_snps_dict[chromosome][snp][i] + tab
+					output += str(all_ld_snps_dict[chromosome][snp][i]) + tab
 				else:
-					output += all_ld_snps_dict[chromosome][snp][i] + newline
+					output += str(all_ld_snps_dict[chromosome][snp][i]) + newline
+
+outFilename = eQTL_inLD_wGWAS.txt
+outFile = open(outFilename, 'w')
+outFile.write(output)
+outFile.close()
