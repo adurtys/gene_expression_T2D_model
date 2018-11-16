@@ -64,7 +64,11 @@ for filename in ld_filenames:
 
 		if (snpA in eQTL_rsID_list) and (snpB in gwas_snp_dict) and (r2 > threshold):
 			# snpA is an eQTl that is in LD with a gwas snp
-			eQTL_inLD_wGWAS[snpA] = [snpB, gwas_snp_dict[snpB][1], r2]
+
+			# obtain snpGroup
+			snpGroup = gwas_snp_dict[snpB][1]
+
+			eQTL_inLD_wGWAS[snpA] = [snpB, snpGroup, r2]
 
 	all_eQTL_inLD[chromosome] = eQTL_inLD_wGWAS
 
