@@ -46,7 +46,7 @@ all_eQTL_inLD = {} # key = chromosome, value = dictionary of eQTL/GWAS snps in L
 
 for filename in ld_filenames:
 	# store choromosome number
-	chromosome = int(filename.split('.')[0].strip("LD_"))
+	chromosome = filename.split('.')[0].strip("LD_")
 	filepath = ld_directory + "/" + filename
 
 	file = open(filepath, 'r')
@@ -64,7 +64,7 @@ for filename in ld_filenames:
 
 		if (snpA in eQTL_rsID_list) and (snpB in gwas_snp_dict) and (r2 > threshold):
 			# snpA is an eQTl that is in LD with a gwas snp
-			eQTL_inLD_wGWAS[snpA] = [snpB, r2]
+			eQTL_inLD_wGWAS[snpA] = [snpB, gwas_snp_dict[snpB][0], gwas_snp_dict[snpB][1], r2]
 
 	all_eQTL_inLD[chromosome] = eQTL_inLD_wGWAS
 
@@ -89,50 +89,3 @@ outFilename = "eQTL_inLD_wGWAS.txt"
 outFile = open(outFilename, 'w')
 outFile.write(output)
 outFile.close()
-
-
-	# ld_snps_dict = {} # key = snpA, value = [snpA, snpB, r2]
-	# ld_snp_pairs = {}
-
-	# for line in file:
-	# 	line = line.rstrip('\r\n')
-	# 	columns = line.split()
-
-	# 	snpA = columns[2]
-	# 	snpB = columns[5]
-	# 	r2 = float(columns[6])
-
-	# 	if (snpA != snpB):
-	# 		if snpA not in ld_snp_pairs.keys():
-	# 			# check if it is the values (stored as snpB)
-	# 			if snpA in ld_snp_pairs.values():
-	# 				# snpA is stored as snpB in the pairs dictionary --> get snpA
-	# 				origSnpA = ld_snp_pairs.keys()[ld_snp_pairs.values().index(snpA)]
-	# 				# check that r2 is the same
-	# 				if (ld_snps_dict[origSnpA][2] != r2):
-	# 					print "ERROR: r2 values are different for", snpA
-
-	# 			else: #store snpA
-	# 				ld_snps_dict[snpA] = snpB
-	# 				ld_snps_dict[snpA] = [snpA, snpB, r2, chromosome]
-
-	# all_ld_snps_dict[chromosome] = ld_snps_dict
-
-	# file.close()
-	
-# eQTL_snp_file = open(eQTL_snp_filename, 'r')
-# eQTL_snpList = []
-# for line in eQTL_snp_file:
-# 	eQTL_snp = line.rstrip('\r\n')
-# 	eQTL_snpList.append(eQTL_snp)
-# eQTL_snp_file.close()
-
-# for snp in eQTL_snpList:
-# 	for chromosome in all_ld_snps_dict:
-# 		if (snp in all_ld_snps_dict[chromosome]):
-# 			for i in range(len(all_ld_snps_dict[chromosome][snp])):
-# 				if i < (len(all_ld_snps_dict[chromosome][snp]) - 1):
-# 					output += str(all_ld_snps_dict[chromosome][snp][i]) + tab
-# 				else:
-# 					output += str(all_ld_snps_dict[chromosome][snp][i]) + newline
-
