@@ -6,7 +6,7 @@
 # argv[3] = list of GWAS snps (all_GREGOR_snplist_rsIDs.txt)
 # argv[4] = threshold for LD significance (r2 > 0.8)
 # Description: determines which eQTL snps are in LD with GWAS snps of interest
-# Run Time: 4 sec
+# Run Time: 2 sec
 
 #!/usr/bin/env python
 import sys, os
@@ -64,7 +64,7 @@ for filename in ld_filenames:
 
 		if (snpA in eQTL_rsID_list) and (snpB in gwas_snp_dict) and (r2 > threshold):
 			# snpA is an eQTl that is in LD with a gwas snp
-			eQTL_inLD_wGWAS[snpA] = [snpB, gwas_snp_dict[snpB][0], gwas_snp_dict[snpB][1], r2]
+			eQTL_inLD_wGWAS[snpA] = [snpB, gwas_snp_dict[snpB][1], r2]
 
 	all_eQTL_inLD[chromosome] = eQTL_inLD_wGWAS
 
@@ -74,7 +74,7 @@ for filename in ld_filenames:
 tab = "\t"
 newline = "\n"
 
-output = ""
+output = "CHR" + tab + "eQTL" + tab + "GWAS" + tab + c
 
 for chromosome in all_eQTL_inLD:
 	for eQTL_rsID in all_eQTL_inLD[chromosome]:
