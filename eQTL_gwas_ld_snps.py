@@ -90,6 +90,7 @@ outFile = open(outFilename, 'w')
 outFile.write(output)
 outFile.close()
 
+
 	# ld_snps_dict = {} # key = snpA, value = [snpA, snpB, r2]
 	# ld_snp_pairs = {}
 
