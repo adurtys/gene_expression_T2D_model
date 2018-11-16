@@ -68,7 +68,8 @@ for filename in ld_filenames:
 			# obtain snpGroup
 			snpGroup = gwas_snp_dict[snpB][1]
 
-			eQTL_inLD_wGWAS[snpA] = [snpB, snpGroup, r2]
+
+			eQTL_inLD_wGWAS[snpA] = [snpB, snpGroup, str(r2)]
 
 	all_eQTL_inLD[chromosome] = eQTL_inLD_wGWAS
 
@@ -85,9 +86,9 @@ for chromosome in all_eQTL_inLD:
 		output += chromosome + tab + eQTL_rsID + tab
 		for i in range(len(all_eQTL_inLD[chromosome][eQTL_rsID])):
 			if i < (len(all_eQTL_inLD[chromosome][eQTL_rsID]) - 1):
-				output += str(all_eQTL_inLD[chromosome][eQTL_rsID][i]) + tab
+				output += all_eQTL_inLD[chromosome][eQTL_rsID][i] + tab
 			else:
-				output += str(all_eQTL_inLD[chromosome][eQTL_rsID]) + newline
+				output += all_eQTL_inLD[chromosome][eQTL_rsID][i] + newline
 
 outFilename = "eQTL_inLD_wGWAS.txt"
 outFile = open(outFilename, 'w')
