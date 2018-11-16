@@ -74,7 +74,7 @@ for filename in ld_filenames:
 tab = "\t"
 newline = "\n"
 
-output = "CHR" + tab + "eQTL" + tab + "GWAS" + tab + c
+output = "CHR" + tab + "eQTL" + tab + "GWAS" + tab + "GWAS_snpGroup" + tab + "R2" + newline
 
 for chromosome in all_eQTL_inLD:
 	for eQTL_rsID in all_eQTL_inLD[chromosome]:
