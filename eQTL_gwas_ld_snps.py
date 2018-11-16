@@ -81,9 +81,9 @@ for chromosome in all_eQTL_inLD:
 		output += chromosome + tab + eQTL_rsID + tab
 		for i in range(len(all_eQTL_inLD[chromosome][eQTL_rsID])):
 			if i < (len(all_eQTL_inLD[chromosome][eQTL_rsID]) - 1):
-				output += all_eQTL_inLD[chromosome][eQTL_rsID][i] + tab
+				output += str(all_eQTL_inLD[chromosome][eQTL_rsID][i]) + tab
 			else:
-				output += all_eQTL_inLD[chromosome][eQTL_rsID] + newline
+				output += str(all_eQTL_inLD[chromosome][eQTL_rsID]) + newline
 
 outFilename = "eQTL_inLD_wGWAS.txt"
 outFile = open(outFilename, 'w')
