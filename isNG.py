@@ -101,10 +101,11 @@ for line in eQTL_geneList_file:
 			tissue = columns[i + 1]
 
 			# update isQTL tissue dictionary
-			if (snpGroup != "") and (snpGroup not in isQTL_tissue_dict):
-				isQTL_tissue_dict[snpGroup] = {tissue : gene}
-			else:
-				isQTL_tissue_dict[snpGroup][tissue] = gene
+			if (snpGroup != ""): # check to make sure snp isn't an error snp
+				if: snpGroup not in isQTL_tissue_dict:
+					isQTL_tissue_dict[snpGroup] = {tissue : gene}
+				else:
+					isQTL_tissue_dict[snpGroup][tissue] = gene
 eQTL_geneList_file.close()
 
 print "There were", numLostSnps, "rsIDs in the eQTL expression matrix file that did not contain a corresponding snpGroup."
