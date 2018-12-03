@@ -77,6 +77,7 @@ isQTL_tissue_dict = {} # key = groupedSnp, value = {tissue:gene}
 eQTL_geneList_file = open(eQTL_geneList_filename, 'r')
 eQTL_geneList_file.readline()
 
+numLostSnps = 0
 for line in eQTL_geneList_file:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
@@ -88,7 +89,8 @@ for line in eQTL_geneList_file:
 	if rsID in rsID_to_snpGroup_dict:
 		snpGroup = rsID_to_snpGroup_dict[rsID]
 	else:
- 		print "ERROR (isNG.py line 89):", rsID, "in eQTL_expMatrix_file, but does not contain a corresponding snpGroup"
+ 		# rsID in eQTL_expMatrix_file but doesn't contain a corresponding snpGroup
+ 		numLostSnps += 1
 
 	numCol = len(columns)
 
@@ -104,6 +106,8 @@ for line in eQTL_geneList_file:
 			else:
 				isQTL_tissue_dict[snpGroup][tissue] = gene
 eQTL_geneList_file.close()
+
+print "There were", numLostSnps, "rsIDs in the eQTL expression matrix file that did not contain a corresponding snpGroup."
 
 tissueList = []
 
@@ -123,7 +127,7 @@ for snpGroup in isQTL_tissue_dict:
 	for tissue in tissueList:
 		isNG = 0
 		if tissue in isQTL_tissue_dict[snpGroup]:
-			geneToCompare = isQTL_tissue_dict[snp][tissue]
+			geneToCompare = isQTL_tissue_dict[snpGroup][tissue]
 			nearestGenes = ng_dict[snpGroup]
 
 			if geneToCompare in nearestGenes:
