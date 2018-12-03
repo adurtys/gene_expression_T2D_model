@@ -89,7 +89,7 @@ for eQTL in eQTL_snplist:
 					if eQTL_gene != isQTL_geneDict[eQTL]:
 						isQTL_geneDict[eQTL].append(eQTL_gene)
 						isQTL_geneDict[eQTL].append(tissue)
-						
+
 		isQTL_vector.append(isQTL)
 
 	isQTL_matrix[eQTL] = isQTL_vector
@@ -117,7 +117,7 @@ output = header
 for eQTL in isQTL_matrix:
 	output += eQTL + tab
 	for i in range(len(isQTL_matrix[eQTL])):
-		if (i < len(isQTL_matrix[eQTL] - 1)):
+		if (i < len(isQTL_matrix[eQTL]) - 1):
 			output += str(isQTL_matrix[eQTL][i]) + tab
 		else:
 			output += str(isQTL_matrix[eQTL][i]) + newline
@@ -131,7 +131,12 @@ isQTL_genes_file = open(isQTL_genes_filename, 'w')
 output = "eQTL" + tab + "ENSGID" + newline
 
 for eQTL in isQTL_geneDict:
-	output += eQTL + tab + isQTL_geneDict[eQTL] + newline
+	output += eQTL + tab
+	for i in range(len(isQTL_geneDict[eQTL])):
+		if (i < len(isQTL_geneDict[eQTL]) - 1):
+			output += isQTL_geneDict[eQTL][i] + tab
+		else:
+			output += isQTL_geneDict[eQTL][i] + newline
 
 isQTL_genes_file.write(output)
 isQTL_genes_file.close()
