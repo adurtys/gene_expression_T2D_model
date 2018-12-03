@@ -30,7 +30,7 @@ for line in grouped_snp_file:
 	snpGroup = columns[0]
 	snp = columns[1]
 
-	snp_info_dict[snp] = snpGroup
+	snp_info_dict[snp] = [snpGroup]
 grouped_snp_file.close()
 
 # add rsID to snp info dictionary 
@@ -75,7 +75,9 @@ for snp in snp_info_dict:
 isQTL_tissue_dict = {} # key = groupedSnp, value = {tissue:gene}
 
 eQTL_geneList_file = open(eQTL_geneList_filename, 'r')
-for line in isQTL_geneList:
+eQTL_geneList_file.readline()
+
+for line in eQTL_geneList_file:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
 
