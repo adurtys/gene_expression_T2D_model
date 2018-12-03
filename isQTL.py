@@ -3,7 +3,6 @@
 # Execution: python isQTL.py [1] [2] [3]
 # arvg[1] = matrix for eQTL snps that are in LD (r2 > 0.8) w/ GWAS snps (eQTL_inLD_wGWAS.txt)
 # argv[2] = tissue information matrix for significant (FDR < 0.05) eQTL snps (signif_QTL_snps_allTisuses.txt)
-# argv[3] = GWAS snpGroups being used in the model (all_GREGOR_snplist_rsIDs.txt)
 # Description: creates matrix for whether each eQTL is in LD with a GWAS snp for every tissue
 
 #!/usr/bin/env python
@@ -65,7 +64,8 @@ signif_eQTLs_byTissue_file.close()
 # create matrix for whether eQTL snp is in LD w/ a gwas snp for every tissue
 isQTL_matrix = {} # key = eQTL, value = isQTL vector for each tissue (where isQTL = 1 if eQTL is in LD w/ a GWAS snp for that tissue)
 
-tissueList = eQTLs_byTissue_dictionary.keys().sort()
+tissueList = eQTLs_byTissue_dictionary.keys()
+tissueList.sort()
 
 # create dictionary of genes attached to all eQTLs that have isQTL = 1
 isQTL_geneDict = {} # key = eQTL if isQTL == 1, value = gene attached to the eQTL that is in LD w/ a GWAS snp (assumes that only one gene is attached to each eQTL (TODO: CHECK IF THIS IS TRUE))
@@ -88,8 +88,6 @@ for eQTL in eQTL_snplist:
 					# check that the stored gene is the same as the new gene
 					if eQTL_gene != isQTL_geneDict[eQTL]:
 						print "ERROR: (isQTL.py line 83): more than one gene attached to", eQTL
-		else: #TODO: deal w/ this!!!
-			print "ERROR (isQTL.py line 70):", eQTL, "not an eQTL for", tissue
 
 		isQTL_vector.append(isQTL)
 
