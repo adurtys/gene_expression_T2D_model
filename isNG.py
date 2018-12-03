@@ -134,7 +134,10 @@ for snpGroup in isQTL_tissue_dict:
 
 			if geneToCompare in nearestGenes:
 				isNG = 1
-				isNG_geneDict[snpGroup] = geneToCompare
+				if snpGroup not in isNG_geneDict:
+					isNG_geneDict[snpGroup] = [geneToCompare]
+				else:
+					isNG_geneDict[snpGroup].append(geneToCompare)
 
 		isNG_vector.append(isNG)
 
@@ -175,7 +178,12 @@ isNG_geneList_file = open(isNG_geneList_filename, 'w')
 
 output = ""
 for snpGroup in isNG_geneDict:
-	output += snpGroup + tab + isNG_geneDict[snpGroup] + newline
+	output += snpGroup + tab
+	for i in range(len(isNG_geneDict[snpGroup])):
+		if i < (len(isNG_geneDict[snpGroup]) - 1):
+			output += isNG_geneDict[snpGroup] + tab
+		else:
+			output += isNG_geneDict[snpGroup] + newline
 
 isNG_geneList_file.write(output)
 isNG_geneList_file.close()
