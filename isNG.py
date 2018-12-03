@@ -102,7 +102,7 @@ for line in eQTL_geneList_file:
 
 			# update isQTL tissue dictionary
 			if (snpGroup != ""): # check to make sure snp isn't an error snp
-				if: snpGroup not in isQTL_tissue_dict:
+				if snpGroup not in isQTL_tissue_dict:
 					isQTL_tissue_dict[snpGroup] = {tissue : gene}
 				else:
 					isQTL_tissue_dict[snpGroup][tissue] = gene
@@ -122,6 +122,7 @@ eQTL_tissue_file.close()
 # create isNG matrix
 isNG_matrix = {} # key = snpGroup, value = vector for whether, for each tissue, the snp is in LD with a GWAS snp, and the corresponding gene is one of the nearest genes
 
+isNG_geneDict = {} # key = snpGroup, value = gene if isNG == 1
 for snpGroup in isQTL_tissue_dict:
 	isNG_vector = []
 
@@ -133,6 +134,8 @@ for snpGroup in isQTL_tissue_dict:
 
 			if geneToCompare in nearestGenes:
 				isNG = 1
+				isNG_geneDict[snpGroup] = geneToCompare
+
 		isNG_vector.append(isNG)
 
 	isNG_matrix[snpGroup] = isNG_vector
@@ -145,7 +148,7 @@ isNG_matrix_filename = "isNG_matrix.txt"
 isNG_matrix_file = open(isNG_matrix_filename, 'w')
 
 # create header line
-header = ""
+header = "snp" + tab
 
 for i in range(len(tissueList)):
 	if i < (len(tissueList) - 1):
@@ -165,3 +168,14 @@ for snpGroup in isNG_matrix:
 
 isNG_matrix_file.write(output)
 isNG_matrix_file.close()
+
+# create isNG output geneList
+isNG_geneList_filename = "isNG_geneList.txt"
+isNG_geneList_file = open(isNG_geneList_filename, 'w')
+
+output = ""
+for snpGroup in isNG_geneDict:
+	output += snpGroup + tab + isNG_geneDict[snpGroup] + newline
+
+isNG_geneList_file.write(output)
+isNG_geneList_file.close()
