@@ -83,12 +83,13 @@ for eQTL in eQTL_snplist:
 
 				# store the gene attached to the eQTL
 				if eQTL not in isQTL_geneDict:
-					isQTL_geneDict[eQTL] = eQTL_gene
+					isQTL_geneDict[eQTL] = [eQTL_gene, tissue]
 				else:
 					# check that the stored gene is the same as the new gene
 					if eQTL_gene != isQTL_geneDict[eQTL]:
-						print "ERROR: (isQTL.py line 83): more than one gene attached to", eQTL
-
+						isQTL_geneDict[eQTL].append(eQTL_gene)
+						isQTL_geneDict[eQTL].append(tissue)
+						
 		isQTL_vector.append(isQTL)
 
 	isQTL_matrix[eQTL] = isQTL_vector
