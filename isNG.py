@@ -101,7 +101,7 @@ for line in eQTL_geneList_file:
 			tissue = columns[i + 1]
 
 			# update isQTL tissue dictionary
-			if snpGroup not in isQTL_tissue_dict:
+			if (snpGroup != "") and (snpGroup not in isQTL_tissue_dict):
 				isQTL_tissue_dict[snpGroup] = {tissue : gene}
 			else:
 				isQTL_tissue_dict[snpGroup][tissue] = gene
