@@ -1,6 +1,6 @@
 # Date Created: 16 November 2018
-# Date Last Modified: 28 November 2018
-# Execution: python isQTL.py [1] [2] [3]
+# Date Last Modified: 3 December 2018
+# Execution: python isQTL.py [1] [2]
 # arvg[1] = matrix for eQTL snps that are in LD (r2 > 0.8) w/ GWAS snps (eQTL_inLD_wGWAS.txt)
 # argv[2] = tissue information matrix for significant (FDR < 0.05) eQTL snps (signif_QTL_snps_allTisuses.txt)
 # Description: creates matrix for whether each eQTL is in LD with a GWAS snp for every tissue
@@ -86,7 +86,7 @@ for eQTL in eQTL_snplist:
 					isQTL_geneDict[eQTL] = [eQTL_gene, tissue]
 				else:
 					# check that the stored gene is the same as the new gene
-					if eQTL_gene != isQTL_geneDict[eQTL]:
+					if eQTL_gene != isQTL_geneDict[eQTL][0]:
 						isQTL_geneDict[eQTL].append(eQTL_gene)
 						isQTL_geneDict[eQTL].append(tissue)
 
@@ -128,7 +128,7 @@ isQTL_matrix_file.close()
 # create gene list
 isQTL_genes_file = open(isQTL_genes_filename, 'w')
 
-output = "eQTL" + tab + "ENSGID" + newline
+output = "eQTL" + tab + "ENSGID" + tab + "TISSUE" + newline
 
 for eQTL in isQTL_geneDict:
 	output += eQTL + tab
