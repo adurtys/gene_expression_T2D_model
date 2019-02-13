@@ -181,9 +181,9 @@ for snpGroup in isNG_geneDict:
 	output += snpGroup + tab
 	for i in range(len(isNG_geneDict[snpGroup])):
 		if i < (len(isNG_geneDict[snpGroup]) - 1):
-			output += isNG_geneDict[snpGroup] + tab
+			output += isNG_geneDict[snpGroup][i] + tab
 		else:
-			output += isNG_geneDict[snpGroup] + newline
+			output += isNG_geneDict[snpGroup][i] + newline
 
 isNG_geneList_file.write(output)
 isNG_geneList_file.close()
