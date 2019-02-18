@@ -1,5 +1,5 @@
 # Date Created: 26 October 2018
-# Date Last Modified: 29 October 2018
+# Date Last Modified: 18 February 2019
 # Execution: python signif_qtl.py [1] [2]
 # argv[1] = path to directory containing GTEx tissue eQTL files (/project/voight_datasets/GTEx_V6p/egenes)
 # argv[2] = threshold for q-value significance for variant-gene pair (0.05)
@@ -58,9 +58,12 @@ for filename in tissueQTL_filenames:
 
 	file.close()
 
-# create output file
-outputFilename = "signif_QTL_snps_allTisuses.txt"
-outputFile = open(outputFilename, 'w')
+# create output directory
+outputDirectoryPath = "./signif_QTL_snps_directory"
+os.mkdir(outputDirectoryPath)
+
+# change directory to output directory
+os.chdir(outputDirectoryPath)
 
 tab = "\t"
 newline = "\n"
@@ -70,14 +73,36 @@ headers = headerLine.split('\t')
 
 newHeaderLine = "Tissue" + tab + headers[0] + tab + headers[2] + tab + headers[11] + tab + headers[12] + tab + headers[13] + tab + headers[16] + tab + headers[27] + newline
 
-output = newHeaderLine
+# create output file for all tissues (combined)
+combinedOutputFilename = "signif_QTL_snps_allTisuses.txt"
+combinedOutputFile = open(combinedOutputFilename, 'w')
+
+combinedOutput = newHeaderLine
+numTotalQTL = 0
 for tissue in tissue_signifQTL_Dict:
+	# create output file for each tissue
+	outputFilename = "signif_QTL_snps_" + tissue
+	outputFile = open(outputFilename, 'w')
+	
+	output = newHeaderLine
+	numTissueQTL = 0
 	for gene_id in tissue_signifQTL_Dict[tissue]:
 		for i in range(len(tissue_signifQTL_Dict[tissue][gene_id])):
 			if (i < len(tissue_signifQTL_Dict[tissue][gene_id]) - 1):
 				output += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + tab
+				combinedOutput += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + tab
 			else: # add newline at end of each gene
 				output += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + newline
+				numTissueQTL += 1
+				combinedOutput += str(tissue_signifQTL_Dict[tissue][gene_id][i]) + newline
+				numTotalQTL += 1
 
-outputFile.write(output)
-outputFile.close()
+	outputFile.write(output)
+	outputFile.close()
+
+	print tissue, "has", numTissueQTL, "cis-eqtls associated for FDR <", threshold
+
+combinedOutputFile.write(combinedOutput)
+combinedOutputFile.close()
+
+print "There are a total of", numTotalQTL, "cis-eqtls across all", len(tissue_signifQTL_Dict), "tissues."
