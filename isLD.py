@@ -22,6 +22,7 @@ for line in eQTL_snp_file:
 	eQTL_rsID = line.rstrip('\r\n')
 	eQTL_rsID_list.add(eQTL_rsID)
 eQTL_snp_file.close()
+print "Finished reading in eQTL_snp_file. This file has", len(eQTL_rsID_list), "snps."
 
 # read in list of GWAS snps
 gwas_snp_file = open(gwas_snp_filename, 'r')
