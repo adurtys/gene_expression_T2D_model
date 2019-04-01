@@ -42,7 +42,7 @@ isLD_multipleLinkedSnps_dict = {} # key = rsID for eQTL snp linked to multiple g
 
 ld_file.readline()
 
-numLinkedSnps == 0
+numLinkedSnps = 0
 for line in ld_file:
 	line = line.rstrip('\r\n')
 	columns = line.split()
