@@ -31,6 +31,7 @@ for line in gwas_snp_file:
 	gwas_rsID = line.rstrip('\r\n')
 	gwas_rsID_list.add(gwas_rsID)
 gwas_snp_file.close()
+print "Finished reading in eQTL_snp_file. This file has", len(gwas_rsID_list), "snps."
 
 # read in ld file
 ld_file = open(ld_filename,'r')
@@ -40,6 +41,8 @@ isLD_dict = {}
 isLD_multipleLinkedSnps_dict = {} # key = rsID for eQTL snp linked to multiple gwas snps, value = [GWAS snps (position and rsID) linked to the eQTL snp]
 
 ld_file.readline()
+
+numLinkedSnps == 0
 for line in ld_file:
 	line = line.rstrip('\r\n')
 	columns = line.split()
@@ -50,19 +53,23 @@ for line in ld_file:
 	snpB_rsID = columns[3]
 
 	if (snpA_rsID in eQTL_rsID_list) and (snpB_rsID in gwas_rsID_list):
+		numLinkedSnps += 1
 		if snpA_rsID in isLD_dict: # eQTL snp is in LD w/ more than one GWAS snp
-			# add it to the isLD_multipleLinkedSnps_dict and remove it from the isLD
-			if snpA_rsID in isLD_multipleLinkedSnps_dict:
+			if snpA_rsID in isLD_multipleLinkedSnps_dict: # eQTL snp is already in multipleLinkedSnps dict --> just add the new linked gwas snp
 				isLD_multipleLinkedSnps_dict[snpA_rsID].append(snpB_position)
 				isLD_multipleLinkedSnps_dict[snpA_rsID].append(snpB_rsID)
-			isLD_multipleLinkedSnps_dict[snpA_rsID] = [snpA_position, snpA_rsID, isLD_dict[snpA_rsID][2], isLD_dict[snpA_rsID][3], snpB_position, snpB_rsID]
+			else: # add eQTL snp to the isLD_multipleLinkedSnps_dict
+				isLD_multipleLinkedSnps_dict[snpA_rsID] = [snpA_position, snpA_rsID, isLD_dict[snpA_rsID][2], isLD_dict[snpA_rsID][3], snpB_position, snpB_rsID]
 
+			# remove eQTL snp from the isLD
 			del isLD_dict[snpA_rsID]
 
-		isLD_dict[snpA_rsID] = [snpA_position, snpA_rsID, snpB_position, snpB_rsID]
+		else:
+			isLD_dict[snpA_rsID] = [snpA_position, snpA_rsID, snpB_position, snpB_rsID]
 ld_file.close()
+print "There are", numLinkedSnps, "eQTL snps linked to GWAS snps."
 
-print "There are", len(isLD_multipleLinkedSnps_dict), "eQTL snps that are linked with more than one GWAS snp."
+# print "There are", len(isLD_multipleLinkedSnps_dict), "eQTL snps that are linked with more than one GWAS snp."
 
 # create output file for every eQTL snp that is in LD with a GWAS snp
 tab = "\t"
