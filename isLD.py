@@ -42,7 +42,6 @@ isLD_multipleLinkedSnps_dict = {} # key = rsID for eQTL snp linked to multiple g
 
 ld_file.readline()
 
-numLinkedSnps = 0
 for line in ld_file:
 	line = line.rstrip('\r\n')
 	columns = line.split()
@@ -67,9 +66,8 @@ for line in ld_file:
 		else:
 			isLD_dict[snpA_rsID] = [snpA_position, snpA_rsID, snpB_position, snpB_rsID]
 ld_file.close()
-print "There are", numLinkedSnps, "eQTL snps linked to GWAS snps."
 
-# print "There are", len(isLD_multipleLinkedSnps_dict), "eQTL snps that are linked with more than one GWAS snp."
+print "There are", len(isLD_multipleLinkedSnps_dict), "eQTL snps that are linked with more than one GWAS snp."
 
 # create output file for every eQTL snp that is in LD with a GWAS snp
 tab = "\t"
