@@ -1,5 +1,5 @@
 # Date Created: 25 March 2019
-# Date Last Modified: 1 April 2019
+# Date Last Modified: 8 April 2019
 # Description: Pipeline for eQTL Project (/project/voight_ML/adurtys/eqtl_feature/new_2019/)
 
 # after completing gene expression lookup, the following files are obtained:
@@ -41,6 +41,10 @@ QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance t
 			# [6]: dbSNP142 rsID
 			# [7]: qval
 			# wc -l: 194,312 eQTLs total (not including header line, but includes duplicates ie. eQTLs that are significant in more than one tissue are listed for each tissue)
+
+--------------------------------------------------------------------------------------------
+QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific expression?
+QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL for any tissue, any gene)
 
 # Excution: cut -f7 signif_QTL_snps_directory/signif_QTL_snps_allTisuses.txt > all_eQTL_snp_rsIDs.txt
 	# wc -l: 194,312 rsIDs
@@ -87,3 +91,5 @@ QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance t
 # Execution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u > genes_regulated.txt
 	# The ENSEMBL gene ENSGIDs for the genes regulated
 	# wc -l genes_regulated.txt: 2825 genes regulated
+
+# Execution: 

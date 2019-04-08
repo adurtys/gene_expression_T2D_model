@@ -3,7 +3,7 @@
 # Execution: python isLD_reformatted.py [1]
 # argv[1] = isLD.eQTL_variants.txt
 # Description: recreates isLD.eQTLs.forTable in the format necessary for isQTL.py
-# Run Time: 
+# Run Time: ~1 sec
 
 #!/usr/bin/env python
 import sys
