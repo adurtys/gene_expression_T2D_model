@@ -1,5 +1,5 @@
 # Date Created: 25 March 2019
-# Date Last Modified: 27 March 2019
+# Date Last Modified: 1 April 2019
 # Description: Pipeline for eQTL Project (/project/voight_ML/adurtys/eqtl_feature/new_2019/)
 
 # after completing gene expression lookup, the following files are obtained:
@@ -24,6 +24,7 @@
 		# Execution: cut -f2 all_GREGOR_snplist_rsIDs.txt > uniq_GWAS_snp_rsIDs.txt
 			# wc -l: 17,797 GWAS rsIDs
 
+-----------------------------------------------------------------------------------------------------------------------
 QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance threshold (FDR < 0.05) for each tissue?
 # Execution: python signif_qtl.py /project/voight_datasets/GTEx_V6p/egenes/ 0.05
 	# Output: creates a directory that contains files with the matrix of qtls that are significant (q-value less than threshold) for each of the 44 tissues that have eQTL data in GTEx
@@ -61,32 +62,28 @@ QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance t
 	# OUTPUT: creates a new version of gwas_eQTL_LD that includes only eQTL snps as snpA and only GWAS snps as snpB
 	# Description: determines which eQTL snps are in LD with GWAS snps of interest
 
-COMMNADS FROM CHRIS (TEST):
-# Execution: awk '{print $4"_"$5"_\t"$6}' ./*.ld > gwas_eQTL_LD
-	# this gets you all the linked SNPs into one file
-
-# Execution: awk '{print $1}' gwas_eQTL_LD > gwas_eQTL_LD.chr_bp_
+# Execution: awk '{print $1}' isLD.txt > isLD.chr_bp_
 	# split into chr_bp_ for eQTL search
 
-# Execution: grep -Ff gwas_eQTL_LD.chr_bp_ /project/voight_datasets/GTEx_V6p/GTEx_Analysis_v6p_eQTL/*signif_snpgene_pairs.txt > gwas_eQTL.eQTLs
+# Execution: grep -Ff isLD.chr_bp_ /project/voight_datasets/GTEx_V6p/GTEx_Analysis_v6p_eQTL/*signif_snpgene_pairs.txt > isLD.eQTLs
 	# find eQTLs
 
 # Execution: (to change the format into one that's easier to use)
-	# sed -i 's/\/project\/voight_datasets\/GTEx_v7\/GTEx_Analysis_v7_eQTL\///' gwas_eQTL.eQTLs
-	# sed -i 's/.v7.signif_variant_gene_pairs.txt//' gwas_eQTL.eQTLs
-	# sed -i 's/\:/\t/' gwas_eQTL.eQTLs
-	# sort -k2 gwas_eQTL.eQTLs | awk '{print $2"\t"$3"\t"$1}' > gwas_eQTL.eQTLs.forTable
+	# sed -i 's/\/project\/voight_datasets\/GTEx_V6p\/GTEx_Analysis_v6p_eQTL\///' isLD.eQTLs
+	# sed -i 's/.v6p.signif_snpgene_pairs.txt//' isLD.eQTLs
+	# sed -i 's/\:/\t/' isLD.eQTLs
+	# sort -k2 isLD.eQTLs | awk '{print $2"\t"$3"\t"$1}' > isLD.eQTLs.forTable
 
-# Execution: awk '{print $1}' gwas_eQTL.eQTLs.forTable | sort -u | wc
+# Execution: awk '{print $1}' isLD.eQTLs.forTable | sort -u | wc
 	# How many snps are eQTLs?
-	# Output: 117252  117252 2319432
-		# Interpretation: 117,252 unique snps are eQTLs
+	# Output: 5300    5300  105195
+		# Interpretation: 5,300 unique snps are eQTLs
 
-# Exexcution: awk '{print $2}' gwas_eQTL.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u | wc
+# Exexcution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u | wc
 	# For how many genes are these SNPs eQTLs?
-	# Output: 26414   26414  422624
-		# Interpretation: 26,414 genes are regulated
+	# Output: 2825    2825   45200
+		# Interpretation: 2,825 genes are regulated
 
-# Execution: awk '{print $2}' gwas_eQTL.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u > genes_regulated.txt
+# Execution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u > genes_regulated.txt
 	# The ENSEMBL gene ENSGIDs for the genes regulated
-
+	# wc -l genes_regulated.txt: 2825 genes regulated

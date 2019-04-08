@@ -52,7 +52,6 @@ for line in ld_file:
 	snpB_rsID = columns[3]
 
 	if (snpA_rsID in eQTL_rsID_list) and (snpB_rsID in gwas_rsID_list):
-		numLinkedSnps += 1
 		if snpA_rsID in isLD_dict: # eQTL snp is in LD w/ more than one GWAS snp
 			if snpA_rsID in isLD_multipleLinkedSnps_dict: # eQTL snp is already in multipleLinkedSnps dict --> just add the new linked gwas snp
 				isLD_multipleLinkedSnps_dict[snpA_rsID].append(snpB_position)
@@ -78,9 +77,9 @@ output = "CHR_A_BP_A_" + tab + "SNP_A" + tab + "CHR_B_BP_B_" + tab + "SNP_B" + n
 for snp in isLD_dict:
 	for i in range(len(isLD_dict[snp])):
 		if i < (len(isLD_dict[snp]) - 1):
-			output += isLD_dict[i] + tab
+			output += isLD_dict[snp][i] + tab
 		else:
-			output += isLD_dict[i] + newline
+			output += isLD_dict[snp][i] + newline
 
 for snp in isLD_multipleLinkedSnps_dict:
 	numLinkedGwasSnps = (len(isLD_multipleLinkedSnps_dict[snp]) - 2) / 2
