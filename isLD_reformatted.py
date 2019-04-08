@@ -2,7 +2,7 @@
 # Date Last Modified: 8 April 2019
 # Execution: python isLD_reformatted.py [1]
 # argv[1] = isLD.eQTL_variants.txt
-# Description: recreates isLD.eQTLs.forTable in the format necessary for isQTL.py
+# Description: reformats the eQTL variants in order to determine rsIDs when creating isQTL matrix
 # Run Time: ~1 sec
 
 #!/usr/bin/env python
@@ -25,12 +25,13 @@ for line in isLD_variant_id_file:
 
 isLD_variant_id_file.close()
 
+tab = "\t"
 newline = "\n"
 
 output = ""
 
 for variant in variant_dict:
-	output += variant_dict[variant] + newline
+	output += variant + tab + variant_dict[variant] + newline
 
 outfilename = "isLD.eQTL_variants_reformatted.txt"
 outfile = open(outfilename, 'w')
