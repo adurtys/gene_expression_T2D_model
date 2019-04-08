@@ -25,18 +25,14 @@ for line in isLD_variant_id_file:
 
 isLD_variant_id_file.close()
 
-tab = "\t"
 newline = "\n"
 
 output = ""
 
-variant in variant_dict:
-	output += variant_dict[variant] + tab
+for variant in variant_dict:
+	output += variant_dict[variant] + newline
 
-output = output.rstrip('\t')
-output += newline
-
-outfilename = isLD.eQTL_variants_reformatted.txt
+outfilename = "isLD.eQTL_variants_reformatted.txt"
 outfile = open(outfilename, 'w')
 outfile.write(output)
 outfile.close()
