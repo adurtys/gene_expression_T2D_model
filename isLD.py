@@ -58,7 +58,7 @@ for line in ld_file:
 	snpB_position = columns[2]
 	snpB_rsID = columns[3]
 
-	if (snpA_rsID in eQTL_rsID_list) and (snpB_rsID in gwas_rsID_list):
+	if (snpA_rsID in gwas_rsID_list) and (snpB_rsID in eQTL_rsID_list):
 		numColocalizedSnps += 1
 
 		output += snpA_position + tab + snpA_rsID + tab + snpB_position + tab + snpB_rsID + newline
