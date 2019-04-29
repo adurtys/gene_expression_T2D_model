@@ -70,13 +70,24 @@ print "There are", numSnpGroups, "groups."
 # for each snpGroup, determine whether any of its snps are or are associated with eQTLs
 isQTL_dict = {} # key = snpGroup, value = 1 or 0 (1 if any of the snps in the snpGroup is/is associated with an eQTL)
 
+# debug
+for i in range(5):
+	print "snpGroupsDict.keys()[i]:", snpGroupsDict.keys()[i]
+
+key1 = snpGroupsDict.keys()[0]
+print "key1 = snpGroupsDict.keys()[0] =", key1
+print "len(snpGroupsDict[key1]):", len(snpGroupsDict[key1])
+for i in range(len(snpGroupsDict[key1])):
+	print snpGroupsDict[key1][i]
+
+
 num_isQTLs = 0
 for group in snpGroupsDict:
 	isQTL_dict[group] = 0
 	for i in range(len(snpGroupsDict[group])):
 		if snpGroupsDict[group][i] in gwas_isQTL_dict:
 			isQTL_dict[group] == 1
-			num_isQTLs += 1
+ 			num_isQTLs += 1
 
 print "Out of the total of", len(isQTL_dict), "GWAS snp groups in the model, there are", num_isQTLs, "snps that colocalize with eQTLs."
 
@@ -87,7 +98,7 @@ newline = "\n"
 output = "snp" + tab + "isQTL" + newline
 
 for snpGroup in isQTL_dict:
-	output += snpGroup + tab + isQTL_dict[snpGroup] + newline
+	output += snpGroup + tab + isQTL_dict[snpGroup].str() + newline
 
 output_filename = "isQTL.txt"
 output_file = open(output, 'w')
