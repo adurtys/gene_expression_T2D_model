@@ -75,7 +75,7 @@ for group in snpGroupsDict:
 	isQTL_dict[group] = 0
 	for i in range(len(snpGroupsDict[group])):
 		if snpGroupsDict[group][i] in gwas_isQTL_dict:
-			isQTL_dict[group] == 1
+			isQTL_dict[group] += 1
  			num_isQTLs += 1
 
 print "Out of the total of", len(isQTL_dict), "GWAS snp groups in the model, there are", num_isQTLs, "snps that colocalize with eQTLs."
