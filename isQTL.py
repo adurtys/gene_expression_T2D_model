@@ -18,7 +18,7 @@ eQTL_inLD_wGWAS_file = open(eQTL_inLD_wGWAS_filename, 'r')
 eQTL_inLD_wGWAS_file.readline()
 
 gwas_isQTL_dict = {} # key = GWAS rsID, value = [GWAS rsID, GWAS variant ID, eQTL rsID, eQTL variant ID]
-for line in gwas_isQTL_dict:
+for line in eQTL_inLD_wGWAS_file:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
 
@@ -98,7 +98,7 @@ newline = "\n"
 output = "snp" + tab + "isQTL" + newline
 
 for snpGroup in isQTL_dict:
-	output += snpGroup + tab + isQTL_dict[snpGroup].str() + newline
+	output += snpGroup + tab + str(isQTL_dict[snpGroup]) + newline
 
 output_filename = "isQTL.txt"
 output_file = open(output, 'w')
