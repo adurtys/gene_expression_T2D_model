@@ -1,5 +1,5 @@
 # Date Created: 25 March 2019
-# Date Last Modified: 8 April 2019
+# Date Last Modified: 22 April 2019
 # Description: Pipeline for eQTL Project (/project/voight_ML/adurtys/eqtl_feature/new_2019/)
 
 # after completing gene expression lookup, the following files are obtained:
@@ -44,7 +44,6 @@ QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance t
 
 --------------------------------------------------------------------------------------------
 QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific expression?
-QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL for any tissue, any gene)
 
 # Excution: cut -f7 signif_QTL_snps_directory/signif_QTL_snps_allTisuses.txt > all_eQTL_snp_rsIDs.txt
 	# wc -l: 194,312 rsIDs
@@ -81,7 +80,7 @@ QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL
 # Execution: awk '{print $1}' isLD.eQTLs.forTable | sort -u | wc
 	# How many snps are eQTLs?
 	# Output: 5300    5300  105195
-		# Interpretation: 5,300 unique snps are eQTLs
+		# Interpretation: 5,300 snps are eQTLs
 
 # Exexcution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u | wc
 	# For how many genes are these SNPs eQTLs?
@@ -92,4 +91,22 @@ QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL
 	# The ENSEMBL gene ENSGIDs for the genes regulated
 	# wc -l genes_regulated.txt: 2825 genes regulated
 
-# Execution: 
+# Execution: python isLD_reformatted.py isLD.eQTL_variants.txt
+	# OUTPUT: isLD.eQTL_variants_reformatted.txt
+	# Description: creates a file that has reformatted versions of the eQTL variants in order to determine rsIDs when creating isQTL matrix
+	# wc -l: 5300 snps
+
+# Execution: cut -f2 isLD.eQTL_variants_reformatted.txt > unique_isLD_eQTL_variants.txt
+	# wc -l: 5300 GWAS snps are in LD with eQTLs
+
+# Execution: create rsID reference file
+	# awk '{print "chr"$5":"$6"\t"$7}' signif_QTL_snps_allTisuses.txt > rsID_conversion_list.txt
+	# tail -n +2 rsID_conversion_list.txt | sort | uniq > rsID_conversion_uniq.txt
+
+# Execution: grep -f unique_isLD_eQTL_variants.txt rsID_conversion_uniq.txt > isLD_eQTL_rsIDs.txt
+	# OUTPUT: isLD_eQTL_rsIDs.txt
+	# Description: determines the rsID for the corresponding GWAS snp
+	# wc -l: 5294 rsIDs obtained (MISSING 6 rsIDs --> not eGenes?)
+
+QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL for any tissue, any gene)
+# Execution: obtain the  

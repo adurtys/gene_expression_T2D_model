@@ -1,5 +1,5 @@
 # Date Created: 2 November 2018
-# Date Last Modified: 1 April 2019
+# Date Last Modified: 29 April 2019
 # Execution: python isLD.py [1] [2] [3]
 # argv[1] = linked snps (A & B) for all chromosomes (./plink/gwas_eQTL_LD)
 # argv[2] = list of eQTL snps (./uniq_eQTL_snp_rsIDs.txt)
@@ -31,7 +31,7 @@ for line in gwas_snp_file:
 	gwas_rsID = line.rstrip('\r\n')
 	gwas_rsID_list.add(gwas_rsID)
 gwas_snp_file.close()
-print "Finished reading in eQTL_snp_file. This file has", len(gwas_rsID_list), "snps."
+print "Finished reading in gwas_snp_file. This file has", len(gwas_rsID_list), "snps."
 
 # read in ld file
 ld_file = open(ld_filename,'r')
