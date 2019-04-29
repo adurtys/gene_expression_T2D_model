@@ -63,7 +63,10 @@ for line in ld_file:
 
 		output += snpA_position + tab + snpA_rsID + tab + snpB_position + tab + snpB_rsID + newline
 
-outFilename = "isLD_2.txt"
+
+print "There are", numColocalizedSnps, "gwas snps that colocalized with eQTL snps"
+
+outFilename = "isLD.txt"
 outFile = open(outFilename, 'w')
 outFile.write(output)
 outFile.close()
