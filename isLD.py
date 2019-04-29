@@ -42,6 +42,7 @@ isLD_multipleLinkedSnps_dict = {} # key = rsID for eQTL snp linked to multiple g
 
 ld_file.readline()
 
+numColocalizedSnps = 0
 for line in ld_file:
 	line = line.rstrip('\r\n')
 	columns = line.split()
@@ -51,7 +52,6 @@ for line in ld_file:
 	snpB_position = columns[2]
 	snpB_rsID = columns[3]
 
-	numColocalizedSnps = 0
 	if (snpA_rsID in eQTL_rsID_list) and (snpB_rsID in gwas_rsID_list):
 		numColocalizedSnps += 1
 		if snpA_rsID in isLD_dict: # eQTL snp is in LD w/ more than one GWAS snp
