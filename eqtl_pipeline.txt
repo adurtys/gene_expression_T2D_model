@@ -82,9 +82,12 @@ QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific 
 
 QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL for any tissue, any gene)
 # Execution: isQTL.py isLD.txt final_grouped_snps_all.txt
-	# Output: 
-	# Description:
-	# Result: 1,098 unique GWAS snps from the model are integrally linked to eQTL snps
+	# Output: isQTL.txt
+	# Description: column[0] = snpGroup, column[1] = isQTL value (1 or 0 for each snpGroup)
+		# isQTL == 1 if any of the GWAS snps in the snpGroup are in LD with (or are themselves) and eQTL according to the isLD.txt table
+	# Result: 1,098 unique GWAS snps from the model are integrally linked to eQTL snps; 866 snpGroups encoded with isQTl = 1 (9655 snpGroups encoded with isQTL = 0)
+
+# Execution: python combineFeatures_newMLTables.py isQTL.txt [FIGURE THIS OUT]
 
 QUESTION 2b: Are the eQTLs in LD with GWAS +/- snps in specific tissues? (GOAL: isQTL_tissue matrix for all tissues, any gene)
 # Execution: sort -k3 isLD.eQTLs.forTable > isLD.eQTLs.forTable.sortedByTissue

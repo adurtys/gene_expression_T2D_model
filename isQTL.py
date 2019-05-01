@@ -1,5 +1,5 @@
 # Date Created: 16 November 2018
-# Date Last Modified: 29 April 2019
+# Date Last Modified: 30 April 2019
 # Execution: python isQTL.py [1] [2]
 # argv[1] = matrix for eQTL snps that are in LD (r2 > 0.7) w/ GWAS snps (isLD.txt)
 # argv[2] = grouped snps file (final_grouped_snps_all.txt)
@@ -88,16 +88,6 @@ for group in snpGroupsDict:
 		num_isQTLs += 1
 	else:
 		isQTL_dict[group] = 0
-
-
-
-	# # for i in range(len(snpGroupsDict[group])):
-	# # 	if snpGroupsDict[group][i] in gwas_isQTL_dict:
-	# # 		index = 1
- # # 	if (index == 1):
- # # 		num_isQTLs += 1
- 	
- # 	# isQTL_dict[group] = index 
 
 print "Out of the total of", len(isQTL_dict), "GWAS snp groups in the model, there are", num_isQTLs, "snps that colocalize with eQTLs."
 
