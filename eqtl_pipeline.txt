@@ -45,7 +45,7 @@ QUESTION 1: Out of the cis-eQTLs in GTEx, which of these meet our significance t
 --------------------------------------------------------------------------------------------
 QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific expression?
 
-# Excution: cut -f7 signif_QTL_snps_directory/signif_QTL_snps_allTisuses.txt > all_eQTL_snp_rsIDs.txt
+# Excution: cut -f7 signif_QTL_snps_allTisuses.txt > all_eQTL_snp_rsIDs.txt
 	# wc -l: 194,312 rsIDs
 
 # Execution: sort all_eQTL_snp_rsIDs.txt | uniq > uniq_eQTL_snp_rsIDs.txt
@@ -64,12 +64,12 @@ QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific 
 # Execution: python isLD.py ./plink/gwas_eQTL_LD ./uniq_eQTL_snp_rsIDs.txt ./uniq_GWAS_snp_rsIDs.txt
 	# OUTPUT: creates a new version of gwas_eQTL_LD that includes only eQTL snps as snpA and only GWAS snps as snpB
 	# Description: determines which eQTL snps are in LD with GWAS snps of interest
+	# wc -l isLD.txt: 9,405 GWAS snps in LD with eQTL snps
 
-# Execution: awk '{print $1}' isLD.txt > isLD.chr_bp_
+# Execution: grep -Ff <(awk '{print $1}' isLD.txt) /project/voight_datasets/GTEx_V6p/GTEx_Analysis_v6p_eQTL/*signif_snpgene_pairs.txt > isLD.eQTLs
 	# split into chr_bp_ for eQTL search
-
-# Execution: grep -Ff isLD.chr_bp_ /project/voight_datasets/GTEx_V6p/GTEx_Analysis_v6p_eQTL/*signif_snpgene_pairs.txt > isLD.eQTLs
-	# find eQTLs
+	# find eQTLs (searches chrA in GTEx)
+	# gives list of eQTLs (wc -l: 32,661)
 
 # Execution: (to change the format into one that's easier to use)
 	# sed -i 's/\/project\/voight_datasets\/GTEx_V6p\/GTEx_Analysis_v6p_eQTL\///' isLD.eQTLs
@@ -77,36 +77,14 @@ QUESTION 2: Are these cis-eQTLs attached to nearby genes having tissue-specific 
 	# sed -i 's/\:/\t/' isLD.eQTLs
 	# sort -k2 isLD.eQTLs | awk '{print $2"\t"$3"\t"$1}' > isLD.eQTLs.forTable
 
-# Execution: awk '{print $1}' isLD.eQTLs.forTable | sort -u | wc
-	# How many snps are eQTLs?
-	# Output: 5300    5300  105195
-		# Interpretation: 5,300 snps are eQTLs
-
-# Exexcution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u | wc
-	# For how many genes are these SNPs eQTLs?
-	# Output: 2825    2825   45200
-		# Interpretation: 2,825 genes are regulated
-
-# Execution: awk '{print $2}' isLD.eQTLs.forTable | sed 's/\./\t/' | awk '{print $1}' | sort -u > genes_regulated.txt
-	# The ENSEMBL gene ENSGIDs for the genes regulated
-	# wc -l genes_regulated.txt: 2825 genes regulated
-
-# Execution: python isLD_reformatted.py isLD.eQTL_variants.txt
-	# OUTPUT: isLD.eQTL_variants_reformatted.txt
-	# Description: creates a file that has reformatted versions of the eQTL variants in order to determine rsIDs when creating isQTL matrix
-	# wc -l: 5300 snps
-
-# Execution: cut -f2 isLD.eQTL_variants_reformatted.txt > unique_isLD_eQTL_variants.txt
-	# wc -l: 5300 GWAS snps are in LD with eQTLs
-
-# Execution: create rsID reference file
-	# awk '{print "chr"$5":"$6"\t"$7}' signif_QTL_snps_allTisuses.txt > rsID_conversion_list.txt
-	# tail -n +2 rsID_conversion_list.txt | sort | uniq > rsID_conversion_uniq.txt
-
-# Execution: grep -f unique_isLD_eQTL_variants.txt rsID_conversion_uniq.txt > isLD_eQTL_rsIDs.txt
-	# OUTPUT: isLD_eQTL_rsIDs.txt
-	# Description: determines the rsID for the corresponding GWAS snp
-	# wc -l: 5294 rsIDs obtained (MISSING 6 rsIDs --> not eGenes?)
+# How many snps are eQTLs?
+	# wc -l isLD.txt: 9405 GWAS snps colocalize with eQTLs (subtracted 1 because ignore header)
 
 QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL for any tissue, any gene)
-# Execution: obtain the  
+# Execution: isQTL.py isLD.txt final_grouped_snps_all.txt
+	# Output: 
+	# Description:
+	# Result: 1,098 unique GWAS snps from the model are integrally linked to eQTL snps
+
+QUESTION 2b: Are the eQTLs in LD with GWAS +/- snps in specific tissues? (GOAL: isQTL_tissue matrix for all tissues, any gene)
+# Execution: sort -k3 isLD.eQTLs.forTable > isLD.eQTLs.forTable.sortedByTissue

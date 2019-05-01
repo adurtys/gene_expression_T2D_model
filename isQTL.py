@@ -72,14 +72,30 @@ isQTL_dict = {} # key = snpGroup, value = 1 or 0 (1 if any of the snps in the sn
 
 num_isQTLs = 0
 for group in snpGroupsDict:
-	index = 0
-	for i in range(len(snpGroupsDict[group])):
-		if snpGroupsDict[group][i] in gwas_isQTL_dict:
-			index = 1
- 	if (index == 1):
- 		num_isQTLs += 1
+	snpsInEachGroup = snpGroupsDict[group]
+	
+	isQTL_values_inSnpGroup = []
+	for i in range(len(snpsInEachGroup)):
+		isQTL = 0
+		if snpsInEachGroup[i] in gwas_isQTL_dict:
+			isQTL = 1
+		isQTL_values_inSnpGroup.append(isQTL)
+
+	if (1 in isQTL_values_inSnpGroup):
+		isQTL_dict[group] = 1
+		num_isQTLs += 1
+	else:
+		isQTL_dict[group] = 0
+
+
+
+	# for i in range(len(snpGroupsDict[group])):
+	# 	if snpGroupsDict[group][i] in gwas_isQTL_dict:
+	# 		index = 1
+ # 	if (index == 1):
+ # 		num_isQTLs += 1
  	
- 	isQTL_dict[group] = index 
+ 	# isQTL_dict[group] = index 
 
 print "Out of the total of", len(isQTL_dict), "GWAS snp groups in the model, there are", num_isQTLs, "snps that colocalize with eQTLs."
 
