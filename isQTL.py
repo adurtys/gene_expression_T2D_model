@@ -35,6 +35,8 @@ for line in eQTL_inLD_wGWAS_file:
 
 eQTL_inLD_wGWAS_file.close()
 
+print "There are", len(gwas_isQTL_dict), "GWAS snps in the dictionary."
+
 # read in command-line arguments
 groupedSnpsFilename = sys.argv[2]
 
@@ -76,10 +78,10 @@ for group in snpGroupsDict:
 	
 	isQTL_values_inSnpGroup = []
 	for i in range(len(snpsInEachGroup)):
-		isQTL = 0
 		if snpsInEachGroup[i] in gwas_isQTL_dict:
-			isQTL = 1
-		isQTL_values_inSnpGroup.append(isQTL)
+			isQTL_values_inSnpGroup.append(1)
+		else:
+			isQTL_values_inSnpGroup.append(0)
 
 	if (1 in isQTL_values_inSnpGroup):
 		isQTL_dict[group] = 1
