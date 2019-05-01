@@ -808,9 +808,9 @@ for line in snpFile:
 	for i in range(len(genesToAnalyze)):
 		if i < (len(genesToAnalyze) - 1):
 			geneToAdd = genesToAnalyze[i]
-			nearestGeneOutput += geneToAdd + tab + distanceFromSnpDict[geneToAdd] + tab
+			nearestGeneOutput += geneToAdd + tab + str(distanceFromSnpDict[geneToAdd]) + tab
 		else: # add newline if this is the last gene in the list of genes associated with the given snp
-			nearestGeneOutput += geneToAdd + tab + distanceFromSnpDict[geneToAdd] + newline
+			nearestGeneOutput += geneToAdd + tab + str(distanceFromSnpDict[geneToAdd]) + newline
 	nearestGenesFile.write(nearestGeneOutput)
 
 outFile.close()
