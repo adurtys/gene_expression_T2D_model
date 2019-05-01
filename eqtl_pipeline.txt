@@ -87,7 +87,13 @@ QUESTION 2a: Are the eQTLs in LD with GWAS +/- snps in each tissue? (GOAL: isQTL
 		# isQTL == 1 if any of the GWAS snps in the snpGroup are in LD with (or are themselves) and eQTL according to the isLD.txt table
 	# Result: 1,098 unique GWAS snps from the model are integrally linked to eQTL snps; 866 snpGroups encoded with isQTl = 1 (9655 snpGroups encoded with isQTL = 0)
 
-# Execution: python combineFeatures_newMLTables.py isQTL.txt [FIGURE THIS OUT]
+# Execution: python eQTL_ML_table.py snpTypes.txt isQTL.txt
+	# Output: four ML table files for each of the different snpTypes
+	# Description: creates the ML table files for the eQTL feature
+
+# Execution: python combineFeatures_newMLTables.py snpCategory_onlyQTL_ML_table.txt snpCategory_noQTL_ML_table.txt
+* should run four times
+TODO: fix this so that there is a space added between whole blood tissue and isQTL feature 
 
 QUESTION 2b: Are the eQTLs in LD with GWAS +/- snps in specific tissues? (GOAL: isQTL_tissue matrix for all tissues, any gene)
 # Execution: sort -k3 isLD.eQTLs.forTable > isLD.eQTLs.forTable.sortedByTissue
