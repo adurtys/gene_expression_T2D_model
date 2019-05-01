@@ -17,17 +17,17 @@ eQTL_inLD_wGWAS_file = open(eQTL_inLD_wGWAS_filename, 'r')
 # skip headerline
 eQTL_inLD_wGWAS_file.readline()
 
-gwas_isQTL_dict = {} # key = GWAS rsID, value = [GWAS rsID, GWAS variant ID, eQTL rsID, eQTL variant ID]
+gwas_isQTL_dict = {} # key = GWAS variantID, value = [GWAS rsID, GWAS variant ID, eQTL rsID, eQTL variant ID]
 for line in eQTL_inLD_wGWAS_file:
 	line = line.rstrip('\r\n')
 	columns = line.split('\t')
-
-	eQTL_variant_ID = columns[0]
-	eQTL_rsID = columns[1]	
-	gwas_rsID = columns[3]
+	
+	gwas_rsID = columns[1]
+	eQTL_variant_ID = columns[2]
+	eQTL_rsID = columns[3]	
 
 	# reformat gwas variant id to match the one used for the snps in the model
-	gwas_variantID = columns[2]
+	gwas_variantID = columns[0]
 	gwas_variantID = gwas_variantID.split("_")
 	gwas_variantID = "chr" + gwas_variantID[0] + ":" + gwas_variantID[1]
 
@@ -89,13 +89,13 @@ for group in snpGroupsDict:
 
 
 
-	# for i in range(len(snpGroupsDict[group])):
-	# 	if snpGroupsDict[group][i] in gwas_isQTL_dict:
-	# 		index = 1
- # 	if (index == 1):
- # 		num_isQTLs += 1
+	# # for i in range(len(snpGroupsDict[group])):
+	# # 	if snpGroupsDict[group][i] in gwas_isQTL_dict:
+	# # 		index = 1
+ # # 	if (index == 1):
+ # # 		num_isQTLs += 1
  	
- 	# isQTL_dict[group] = index 
+ # 	# isQTL_dict[group] = index 
 
 print "Out of the total of", len(isQTL_dict), "GWAS snp groups in the model, there are", num_isQTLs, "snps that colocalize with eQTLs."
 
