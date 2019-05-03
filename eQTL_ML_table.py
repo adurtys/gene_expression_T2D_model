@@ -1,5 +1,5 @@
-# Date Created: 20 August 2018
-# Date Last Modified: 21 August 2018
+# Date Created: 30 April 2019
+# Date Last Modified: 30 April 2019
 # Execution: python eQTL_ML_table.py groupedSnpTypesFilename isQTL_table_filename
 # argv1: filename for file containing snp type for each group of snps (snpTypes.txt)
 # argv2: filename for file containing isQTL feature table

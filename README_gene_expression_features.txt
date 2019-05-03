@@ -44,9 +44,12 @@ Notes:
 # to create the ML table
 #-------------------------------------------------------------------------------------------------------
 
+Execution: python expression_ML_table.py [1] [2]
+	[1] = snpTypes.txt
+	[2] = lookupResults_centroidSnps_final_grouped_snps_all.txt
+
 Execution: python combineFeatures_newMLTables.py [1] [2]
-	[1] = lookupResults_centroidSnps_final_grouped_snps_all.txt
+	[1] = file of ML table with only expression features
 	[2] = file of ML table with other desired features
 
-Output:
-	[2]_combined.txt 
+	Output: [2]_combined.txt 

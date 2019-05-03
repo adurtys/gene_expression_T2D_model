@@ -89,7 +89,8 @@ for snp in noExpressionDict:
 		combinedFeaturesDict[snp] = combinedVector
 
 # create output file
-outFilename = noExpressionMLTableFilename + "_combined.txt"
+oldFilename_parts = noExpressionMLTableFilename.split("_")
+outFilename = oldFilename_parts[0] + "_" + oldFilename_parts[1] + "_combined_ML_table.txt"
 outFile = open(outFilename, 'w')
 
 tab = "\t"
