@@ -19,7 +19,7 @@ eQTL_tissue_filenames = os.listdir(eQTL_byTissue_direc)
 # read in tissue information
 eQTL_dict = {} # key = tissue, value = array of significant eQTL snps for each tissue
 for filename in eQTL_tissue_filenames:
-	tissue = filename.strip("Analysis_eQTLs.txt").rstrip("_")
+	tissue = filename[:-19] # removes "_Analysis_eQTLs.txt"
 	filepath = eQTL_byTissue_direc + "/" + filename
 
 	file = open(filepath, 'r')
