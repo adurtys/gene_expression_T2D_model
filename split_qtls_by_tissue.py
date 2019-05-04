@@ -4,7 +4,7 @@
 # argv[1] = isLD.eQTLs.forTable.sortedByTissue
 # Description: split up eQTLs_byTissue_file into separate files for each tissue
 # Output: creates directory containing (TODO: FIGURE OUT NUMBER) files (one for each tissue) --> each file contains snpgene pairs in that tissue
-# Runtime: TODO
+# Runtime: 1 sec
 
 #!/usr/bin/env python
 import sys, os
@@ -55,11 +55,9 @@ for tissue in eQTLs_byTissue_dict:
 	for snpgene_pair in eQTLs_byTissue_dict[tissue]:
 		snpgene_pair = snpgene_pair.split("_")
 
-		output += snpgene_pair[0] + tab + snpgene_pair[1] + newline
+		snp = snpgene_pair[0] + "_" + snpgene_pair[1]
+
+		output += snp + tab + snpgene_pair[5] + newline
 
 	outputFile.write(output)
 	outputFile.close()
-
-
-
-
