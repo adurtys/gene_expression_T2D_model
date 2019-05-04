@@ -1,5 +1,5 @@
 # Date Created: 16 November 2018
-# Date Last Modified: 30 April 2019
+# Date Last Modified: 4 May 2019
 # Execution: python isQTL.py [1] [2]
 # argv[1] = matrix for eQTL snps that are in LD (r2 > 0.7) w/ GWAS snps (isLD.txt)
 # argv[2] = grouped snps file (final_grouped_snps_all.txt)
@@ -111,17 +111,11 @@ output_file.close()
 
 ## then create the ML table
 
-# # read in signif_eQTLs by tissue
-# signif_eQTLs_byTissue_file = open(signif_eQTLs_byTissue_filename, 'r')
 
-# # skip headerline
-# signif_eQTLs_byTissue_file.readline()
 
 # eQTL_snplist = set()
-# eQTLs_byTissue_dictionary = {} # key = tissue, value = dictionary of eQTL snps and info for that tissue
 # for line in signif_eQTLs_byTissue_file:
-# 	line = line.rstrip('\r\n')
-# 	columns = line.split('\t')
+
 
 # 	tissue = columns[0]
 # 	eQTL = columns[6]
