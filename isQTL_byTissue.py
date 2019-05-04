@@ -104,7 +104,7 @@ print "There are", numSnpGroups, "groups."
 isQTL_tissue_dict = {} # key = tissue feature name, value = isQTL dictionary for each tissue (key = snpGroup, value = isQTL)
 for tissue in eQTL_dict:
 	# for each snpGroup, determine whether any of its snps are or are associated with eQTLs
-	isQTL_vector = []
+	isQTL_dict = {} # key = snpGroup, value = 1 or 0 (1 if any of the snps in the snpGroup is/is associated with an eQTL)
 	num_isQTLs = 0
 
 	for group in snpGroupsDict:
