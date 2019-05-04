@@ -57,6 +57,7 @@ for tissue in eQTLs_byTissue_dict:
 
 		output += snpgene_pair[0] + tab + snpgene_pair[1] + newline
 
+	outputFile.write(output)
 	outputFile.close()
 
 
