@@ -19,7 +19,7 @@ eQTL_tissue_filenames = os.listdir(eQTL_byTissue_direc)
 # read in tissue information
 eQTL_dict = {} # key = tissue, value = array of significant eQTL snps for each tissue
 for filename in eQTL_tissue_filenames:
-	tissue = filename.rstrip("_eQTLs.txt")
+	tissue = filename.rstrip("_Analysis_eQTLs.txt")
 	filepath = eQTL_byTissue_direc + "/" + filename
 
 	file = open(filepath, 'r')
@@ -135,19 +135,22 @@ newline = "\n"
 
 # create headerline
 headerline = "snp" + tab
-numTissueFeatures = len(isQTL_tissue_dict)
+tissueList = isQTL_tissue_dict.keys()
+tissueList.sort()
+numTissueFeatures = len(tissueList)
 
 for i in range(numTissueFeatures):
 	if (i < (numTissueFeatures - 1)):
-		headerline += isQTL_tissue_dict.keys()[i] + tab
+		headerline += tissueList[i] + tab
 	else:
-		headerline += isQTL_tissue_dict.keys()[i] + newline
+		headerline += tissueList[i] + newline
 
 output = headerline
 
 for snpGroup in snpGroupsDict:
+	output += snpGroup + tab
 	for i in range(numTissueFeatures):
-		tissue = isQTL_tissue_dict.keys()[i]
+		tissue = tissueList[i]
 		if (i < (numTissueFeatures - 1)):
 			output += str(isQTL_tissue_dict[tissue][snpGroup]) + tab
 		else:
